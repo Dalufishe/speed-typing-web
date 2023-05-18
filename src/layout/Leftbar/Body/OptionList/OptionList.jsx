@@ -9,7 +9,6 @@ import { MdLeaderboard } from "react-icons/md";
 
 export default function OptionList() {
   const history = useHistory();
-  console.log(history);
   return (
     <div className={cx("py-5")}>
       <Button

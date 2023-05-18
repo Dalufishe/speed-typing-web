@@ -10,7 +10,7 @@ export default function App() {
     <BrowserRouter>
       <div className={cx("text-b1", "flex", "w-screen h-screen")}>
         {/* Leftbar */}
-        <div className={cx("w-[300px] h-full")}>
+        <div className={cx("w-[300px] min-w-[300px] h-full")}>
           <Leftbar />
         </div>
         {/* Main */}
