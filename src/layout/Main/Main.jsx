@@ -10,11 +10,11 @@ export default function Main() {
   return (
     <div className={cx("w-full h-full", "p-5", "bg-d1")}>
       <Switch>
-        <Route path={CONFIG.path + ROUTE.practice} component={Practice} />
-        <Route path={CONFIG.path + ROUTE.theme} component={Practice} />
-        <Route path={CONFIG.path + ROUTE.achievement} component={Practice} />
-        <Route path={CONFIG.path + ROUTE.leaderboard} component={Practice} />
-        <Redirect exact from={CONFIG.path} to={CONFIG.path + ROUTE.practice} />
+        <Route path={ROUTE.practice} component={Practice} />
+        <Route path={ROUTE.theme} component={Practice} />
+        <Route path={ROUTE.achievement} component={Practice} />
+        <Route path={ROUTE.leaderboard} component={Practice} />
+        <Redirect exact from={"/"} to={ROUTE.practice} />
       </Switch>
     </div>
   );

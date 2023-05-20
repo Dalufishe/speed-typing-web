@@ -2,7 +2,6 @@ import { cx } from "@emotion/css";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ROUTE } from "../../../../constant/route.const";
-import CONFIG from "../../../../config/web.config.json";
 
 import { IoIosColorPalette } from "react-icons/io";
 import { MdLeaderboard } from "react-icons/md";
@@ -28,7 +27,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(CONFIG.path + ROUTE.practice);
+              history.push(ROUTE.practice);
             }}
           >
             <AiFillFire />
@@ -40,7 +39,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(CONFIG.path + ROUTE.status);
+              history.push(ROUTE.status);
             }}
           >
             <MdLeaderboard />
@@ -52,7 +51,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(CONFIG.path + ROUTE.plugin);
+              history.push(ROUTE.plugin);
             }}
           >
             <FaPlug />
@@ -77,7 +76,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(CONFIG.path + ROUTE.theme);
+              history.push(ROUTE.theme);
             }}
           >
             <IoIosColorPalette />
@@ -89,7 +88,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(CONFIG.path + ROUTE.achievement);
+              history.push(ROUTE.achievement);
             }}
           >
             <GiAchievement />
@@ -101,7 +100,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(CONFIG.path + ROUTE.leaderboard);
+              history.push(ROUTE.leaderboard);
             }}
           >
             <AiFillTrophy />

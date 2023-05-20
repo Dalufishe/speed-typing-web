@@ -54,7 +54,7 @@ function Status({ typing_data, set_typing_data, typing_data_id }) {
         "bg-d3",
         "rounded-md",
         "shadow-md",
-        "flex justify-between items-center gap-3",
+        "flex items-center gap-3",
         "border-[1.5px] border-m1",
         css`
           width: calc(100vw - 300px - 20px - 20px + 4px);
