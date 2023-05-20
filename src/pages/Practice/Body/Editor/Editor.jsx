@@ -2,20 +2,28 @@ import { css, cx } from "@emotion/css";
 import React from "react";
 import Cursor from "./Cursor/Cursor";
 import { useTyping } from "./useTyping";
-import TypingSystem from "../../../../core/TypingSystem";
 import Topbar from "./Topbar/Topbar";
-import { useTypingSystem } from "../../../../core/hooks/useTypingSystem";
 
-export default function Editor() {
+import { connect } from "react-redux";
+import { set_typing_data } from "../../../../redux/action/set_typing_data.act";
+import { useTypingSystem } from "../../../../core/hooks/useTypingSystem";
+import Tail from "./Tail/Tail";
+
+function Editor({ set_typing_data, typing_data }) {
   // boolean, typing or not
   const [typing] = useTyping();
+  const { head_article, tail_article } = typing_data;
 
-  // hook connect to the TypingSystem core api
-  const [head_article, tail_article] = useTypingSystem(
-    new TypingSystem({
-      spanning: 60,
-    }),
-    (t) => {}
+  // react-hook connect to TypingSystem api
+  useTypingSystem(
+    {
+      article:
+        "The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011",
+      spanning: 30,
+    },
+    (t) => {
+      set_typing_data(t);
+    }
   );
 
   return (
@@ -59,6 +67,7 @@ export default function Editor() {
               <pre className={cx("w-fit")}>
                 {head_article.map(({ char, correct }) => (
                   <span
+                    key={Math.random()}
                     className={cx(correct ? "text-blue-400" : "text-red-600")}
                   >
                     {char}
@@ -78,15 +87,31 @@ export default function Editor() {
               )}
             >
               <pre className={cx("w-full")}>
-                {tail_article.map(({ char }) => char)}
+                {tail_article.map(({ char }) => (
+                  <span key={Math.random()}>{char}</span>
+                ))}
               </pre>
             </div>
           </div>
           {/*  */}
         </div>
         {/* editor-tail */}
-        <div className={cx("h-[21px]", "bg-m1", "rounded-sm")}></div>
+        <div className="h-[21px]">
+          <Tail />
+        </div>
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    typing_data: state.typing_data.data,
+  };
+};
+
+const mapDispatchToProps = {
+  set_typing_data,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

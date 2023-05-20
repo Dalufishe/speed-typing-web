@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
+import TypingSystem from "../TypingSystem";
 
-const useTypingSystem = (t, handleKeyDownWithLegalKey) => {
-  const [head_article, set_head_article] = useState(t.head_article);
-  const [tail_article, set_tail_article] = useState(t.tail_article);
+const useTypingSystem = (config = {}, handleKeyDownWithLegalKey) => {
   useEffect(() => {
-    t.start_race(
-      // handleKeyDownWithLegalKey
-      (t) => {
-        set_head_article(t.head_article);
-        set_tail_article(t.tail_article);
+    const t = new TypingSystem(config);
 
+    handleKeyDownWithLegalKey(t); // default render, not start yet
+
+    const fn = () => {
+      t.start_race((t) => {
         handleKeyDownWithLegalKey(t);
-      }
-    );
+      });
+      document.removeEventListener("keydown", fn);
+    };
+
+    document.addEventListener("keydown", fn);
   }, []);
-  return [head_article, tail_article];
 };
 
 export { useTypingSystem };

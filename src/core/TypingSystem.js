@@ -10,16 +10,23 @@ export default class TypingSystem {
 
   article; // :string
   full_article = []; // :{char: string}[]
+  full_words_array = [];
   head_article = []; // :{char: string, correct: boolean, correct_char: string}[]
+  head_words_array = [];
   tail_article = []; // :{char: string}[]
+  tail_words_array = [];
 
   spanning; // sec
+  time_pass = 0; // sec
   time_remaining; // sec
-  wpm; // w/m
-  accurarcy; // %
+
+  word_count;
+  correct_word_count = 0;
+
+  wpm = 0; // w/m
+  accurarcy = 0; // %
 
   legal_key = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 ";
-  user_input = []; // :string[]
   current_input; // :string
 
   /**@constructor */
@@ -34,19 +41,38 @@ export default class TypingSystem {
         char,
       };
     });
+
+    this.full_words_array = this.full_article
+      .map(({ char }) => char)
+      .join("")
+      .split(" ");
+
+    this.word_count = this.full_words_array.length;
+
     this.head_article = [];
     this.tail_article = [...this.full_article];
 
-    this.spanning = spanning;
+    this.spanning = this.time_remaining = spanning;
   }
 
   /**@method */
 
   //$ 主要方法
-
   // 開始測驗
   start_race(handleKeyDownWithLegalKey = () => {}) {
+    // 獲取用戶輸入
     this.get_user_input(true, handleKeyDownWithLegalKey);
+    // 倒數計時
+    this.countdown_timer(1000, () => {
+      // time
+      this.set_time_remaining();
+      this.set_time_pass();
+      // words
+      this.set_correct_word_count();
+      this.set_word_per_minite();
+      this.set_accurarcy();
+    });
+    // 結束計時
     setTimeout(() => {
       this.end_race();
     }, this.spanning * 1000);
@@ -55,11 +81,14 @@ export default class TypingSystem {
   // 結束測驗
   end_race() {
     this.get_user_input(false);
+    clearInterval(this.#countdown_timer_interval);
   }
 
   // 內部方法，用於記憶
   #_handleKeyDownWithLegalKey;
   #_handleKeyDown;
+
+  //$ 工具方法
 
   // 獲取使用者輸入，並作為開關
   get_user_input(enable = true, handleKeyDownWithLegalKey) {
@@ -82,16 +111,16 @@ export default class TypingSystem {
 
       // 處理後退鍵
       if (key === "Backspace") {
-        this.user_input.push(key);
         this.current_input = key;
         this.control_article_head_tail(0);
       }
 
       if (this.legal_key.includes(key)) {
         // 輸入合法字
-        this.user_input.push(key);
+
         this.current_input = key;
         this.control_article_head_tail();
+        this.set_words_array();
 
         // callback : handleKeyDownWithLegalKey
         handleKeyDownWithLegalKey(this);
@@ -138,8 +167,6 @@ export default class TypingSystem {
     }
   }
 
-  //$ 工具方法
-
   // 判斷輸入是否正確
   is_current_input_correct() {
     if (this.current_input === this.tail_article[0].char) {
@@ -147,5 +174,60 @@ export default class TypingSystem {
     } else {
       return false;
     }
+  }
+
+  #countdown_timer_interval;
+
+  countdown_timer(interval, cb) {
+    this.#countdown_timer_interval = setInterval(() => {
+      cb();
+    }, interval);
+  }
+
+  set_time_remaining() {
+    this.time_remaining -= 1;
+  }
+
+  set_time_pass() {
+    this.time_pass += 1;
+  }
+
+  set_words_array() {
+    const head = this.head_article;
+    const tail = this.tail_article;
+
+    this.head_words_array = head
+      .map(({ char }) => char)
+      .join("")
+      .split(" ")
+      .filter((char) => char != "");
+
+    this.tail_words_array = tail
+      .map(({ char }) => char)
+      .join("")
+      .split(" ")
+      .filter((char) => char != "");
+  }
+
+  set_correct_word_count() {
+    this.correct_word_count = this.head_words_array.filter(
+      (word, index) => word === this.full_words_array[index]
+    ).length;
+  }
+
+  set_word_per_minite() {
+    let wpm = this.correct_word_count / (this.time_pass / 60);
+    if (wpm === Infinity || NaN) {
+      wpm = 0;
+    }
+
+    this.wpm = wpm;
+  }
+
+  set_accurarcy() {
+    let accurarcy =
+      (this.correct_word_count / this.head_words_array.length) * 100;
+    accurarcy = Number(accurarcy.toFixed(1)) || 0;
+    this.accurarcy = accurarcy;
   }
 }

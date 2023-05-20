@@ -4,6 +4,8 @@ import { css, cx } from "@emotion/css";
 
 export default function Button({
   children,
+  start,
+  end,
   onClick,
   className,
   px = 8,
@@ -11,6 +13,7 @@ export default function Button({
   bg = "d1",
   full = false,
 }) {
+  // tailwind preload
   const _tailwindcss_preload = (
     <div className="bg-d1 bg-d2 bg-d3 bg-m1 bg-m2 bg-m3 bg-b1"></div>
   );
@@ -26,6 +29,7 @@ export default function Button({
         "cursor-pointer",
         `bg-${bg}`,
         "hover:brightness-110",
+        "relative",
         css`
           padding-right: ${px}px;
           padding-left: ${px}px;
@@ -36,7 +40,9 @@ export default function Button({
         className
       )}
     >
-      {children}
+      <div className="flex justify-center items-center gap-1">{children}</div>
+      <div className="absolute right-4">{end}</div>
+      <div className="absolute left-4">{start}</div>
     </div>
   );
 }
