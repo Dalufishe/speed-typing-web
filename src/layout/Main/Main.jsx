@@ -14,7 +14,7 @@ export default function Main() {
         <Route path={CONFIG.path + ROUTE.theme} component={Practice} />
         <Route path={CONFIG.path + ROUTE.achievement} component={Practice} />
         <Route path={CONFIG.path + ROUTE.leaderboard} component={Practice} />
-        <Redirect exact from="/" to={CONFIG.path + ROUTE.practice} />
+        <Redirect exact from={CONFIG.path} to={CONFIG.path + ROUTE.practice} />
       </Switch>
     </div>
   );
