@@ -26,7 +26,8 @@ export default class TypingSystem {
   wpm = 0; // w/m
   accurarcy = 0; // %
 
-  legal_key = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 ";
+  legal_key =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-'\" ";
   current_input; // :string
 
   /**@constructor */

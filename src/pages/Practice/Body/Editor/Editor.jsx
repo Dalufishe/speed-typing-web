@@ -94,9 +94,7 @@ function Editor({ set_typing_data, typing_data }) {
             >
               <pre className={cx("w-full")}>
                 {/* 提升效能 : 只擷取片段文章渲染 */}
-                {tail_article.slice(0, 80).map(({ char }) => (
-                  <span key={Math.random()}>{char}</span>
-                ))}
+                {tail_article.slice(0, 80).map(({ char }) => char)}
               </pre>
             </div>
           </div>
