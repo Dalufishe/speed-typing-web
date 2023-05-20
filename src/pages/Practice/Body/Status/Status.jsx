@@ -64,6 +64,28 @@ function Status({ typing_data, set_typing_data, typing_data_id }) {
       {/* left-box */}
       <div
         className={cx(
+          "hidden lg:flex",
+          "flex items-center gap-3",
+          "text-[18px] font-mono"
+        )}
+      >
+        {/* end */}
+        <Button
+          bg="m1"
+          className={cx("border border-m3", "rounded-sm", "whitespace-nowrap")}
+          px={20}
+          py={16}
+        >
+          結束 (<span className="underline">Esc</span>)
+        </Button>
+      </div>
+      {/* divider */}
+      <div
+        className={cx("hidden lg:flex", "w-[1.5px] h-full mx-3", "bg-m1")}
+      ></div>
+      {/* right-box */}
+      <div
+        className={cx(
           "justify-center lg:justify-start flex-grow lg:flex-grow-0",
           "flex items-center gap-3",
           "text-[20px] font-mono"
@@ -90,37 +112,6 @@ function Status({ typing_data, set_typing_data, typing_data_id }) {
           value={accurarcy}
           unit="%"
         />
-      </div>
-      {/* divider */}
-      <div
-        className={cx("hidden lg:flex", "w-[1.5px] h-full mx-3", "bg-m1")}
-      ></div>
-      {/* right-box */}
-      <div
-        className={cx(
-          "hidden lg:flex",
-          "flex items-center gap-3 flex-grow",
-          "text-[18px] font-mono"
-        )}
-      >
-        {/* end */}
-        <Button
-          bg="m1"
-          className={cx("border border-m3", "rounded-sm", "whitespace-nowrap")}
-          px={20}
-          py={16}
-        >
-          結束 (<span className="underline">Esc</span>)
-        </Button>
-        {/* keyboard */}
-        <Button
-          bg="m1"
-          className={cx("border border-m3", "rounded-sm", "whitespace-nowrap")}
-          px={20}
-          py={16}
-        >
-          鍵盤 (<span className="underline">F1</span>)
-        </Button>
       </div>
     </div>
   );
