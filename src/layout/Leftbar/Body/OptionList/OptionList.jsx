@@ -2,6 +2,7 @@ import { cx } from "@emotion/css";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ROUTE } from "../../../../constant/route.const";
+import CONFIG from "../../../../config/web.config.json";
 
 import { IoIosColorPalette } from "react-icons/io";
 import { MdLeaderboard } from "react-icons/md";
@@ -27,7 +28,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.practice);
+              history.push(CONFIG.path + ROUTE.practice);
             }}
           >
             <AiFillFire />
@@ -39,7 +40,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.status);
+              history.push(CONFIG.path + ROUTE.status);
             }}
           >
             <MdLeaderboard />
@@ -51,7 +52,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.plugin);
+              history.push(CONFIG.path + ROUTE.plugin);
             }}
           >
             <FaPlug />
@@ -76,7 +77,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.theme);
+              history.push(CONFIG.path + ROUTE.theme);
             }}
           >
             <IoIosColorPalette />
@@ -88,7 +89,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.achievement);
+              history.push(CONFIG.path + ROUTE.achievement);
             }}
           >
             <GiAchievement />
@@ -100,7 +101,7 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.leaderboard);
+              history.push(CONFIG.path + ROUTE.leaderboard);
             }}
           >
             <AiFillTrophy />
