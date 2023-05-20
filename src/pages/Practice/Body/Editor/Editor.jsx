@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { set_typing_data } from "../../../../redux/action/set_typing_data.act";
 import { useTypingSystem } from "../../../../core/hooks/useTypingSystem";
 import Tail from "./Tail/Tail";
+import { article_generator } from "./utils/article_generator";
 
 function Editor({ set_typing_data, typing_data }) {
   // boolean, typing or not
@@ -17,9 +18,8 @@ function Editor({ set_typing_data, typing_data }) {
   // react-hook connect to TypingSystem api
   useTypingSystem(
     {
-      article:
-        "The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011 The default article what really happened to Steve Job in 2011",
-      spanning: 30,
+      article: article_generator(1000),
+      spanning: 60,
     },
     (t) => {
       set_typing_data(t);
@@ -65,14 +65,20 @@ function Editor({ set_typing_data, typing_data }) {
               )}
             >
               <pre className={cx("w-fit")}>
-                {head_article.map(({ char, correct }) => (
-                  <span
-                    key={Math.random()}
-                    className={cx(correct ? "text-blue-400" : "text-red-600")}
-                  >
-                    {char}
-                  </span>
-                ))}
+                {/* 提升效能 : 只擷取片段文章渲染 */}
+                {head_article
+                  .slice(
+                    head_article.length - 40 > 0 ? head_article.length - 40 : 0,
+                    head_article.length
+                  )
+                  .map(({ char, correct }) => (
+                    <span
+                      key={Math.random()}
+                      className={cx(correct ? "text-blue-400" : "text-red-600")}
+                    >
+                      {char}
+                    </span>
+                  ))}
               </pre>
             </div>
             {/* Center - cursor */}
@@ -87,7 +93,8 @@ function Editor({ set_typing_data, typing_data }) {
               )}
             >
               <pre className={cx("w-full")}>
-                {tail_article.map(({ char }) => (
+                {/* 提升效能 : 只擷取片段文章渲染 */}
+                {tail_article.slice(0, 80).map(({ char }) => (
                   <span key={Math.random()}>{char}</span>
                 ))}
               </pre>
