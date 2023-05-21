@@ -17,5 +17,4 @@ const typing_data = (
       return state;
   }
 };
-
 export { typing_data };

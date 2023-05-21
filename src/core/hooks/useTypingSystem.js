@@ -1,21 +1,31 @@
 import { useEffect, useState } from "react";
 import TypingSystem from "../TypingSystem";
 
+let t;
+
 const useTypingSystem = (config = {}, handleKeyDownWithLegalKey) => {
+  const [start, setStart] = useState(false);
+  const [end, setEnd] = useState(false);
+
   useEffect(() => {
-    const t = new TypingSystem(config);
+    t = new TypingSystem(config);
+  }, []);
 
+  useEffect(() => {
     handleKeyDownWithLegalKey(t); // default render, not start yet
-
-    const fn = () => {
+    if (start) {
       t.start_race((t) => {
         handleKeyDownWithLegalKey(t);
       });
-      document.removeEventListener("keydown", fn);
-    };
+      setStart(false);
+    }
+    if (end) {
+      t.end_race();
+      setEnd(false);
+    }
+  }, [start, end]);
 
-    document.addEventListener("keydown", fn);
-  }, []);
+  return [setStart, setEnd];
 };
 
 export { useTypingSystem };

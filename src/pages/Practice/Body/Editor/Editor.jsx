@@ -1,7 +1,7 @@
 import { css, cx } from "@emotion/css";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import Cursor from "./Cursor/Cursor";
-import { useTyping } from "./useTyping";
+import { useTyping } from "./hooks/useTyping";
 import Topbar from "./Topbar/Topbar";
 
 import { connect } from "react-redux";
@@ -9,14 +9,21 @@ import { set_typing_data } from "../../../../redux/action/set_typing_data.act";
 import { useTypingSystem } from "../../../../core/hooks/useTypingSystem";
 import Tail from "./Tail/Tail";
 import { article_generator } from "./utils/article_generator";
+import { useStartTyping } from "../../../../core/hooks/useStartTyping";
+import { useEndTyping } from "../../../../core/hooks/useEndTyping";
 
-function Editor({ set_typing_data, typing_data }) {
+function Editor({
+  typing_data,
+  set_typing_data,
+  /* render immediatly */
+  _id,
+}) {
+  // get data
+  const { head_article, tail_article } = typing_data;
   // boolean, typing or not
   const [typing] = useTyping();
-  const { head_article, tail_article } = typing_data;
-
   // react-hook connect to TypingSystem api
-  useTypingSystem(
+  const [setStart, setEnd] = useTypingSystem(
     {
       article: article_generator(1000),
       spanning: 60,
@@ -25,6 +32,9 @@ function Editor({ set_typing_data, typing_data }) {
       set_typing_data(t);
     }
   );
+
+  useStartTyping(setStart);
+  useEndTyping(setEnd);
 
   return (
     <div className={cx("bg-d3", "p-0.5", "flex", "rounded-md", "shadow-md")}>
@@ -112,6 +122,7 @@ function Editor({ set_typing_data, typing_data }) {
 const mapStateToProps = (state) => {
   return {
     typing_data: state.typing_data.data,
+    id: state.typing_data._id,
   };
 };
 

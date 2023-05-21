@@ -81,7 +81,9 @@ export default class TypingSystem {
 
   // 結束測驗
   end_race() {
+    // 不再獲取數據
     this.get_user_input(false);
+    // 結束倒計時
     clearInterval(this.#countdown_timer_interval);
   }
 
@@ -109,7 +111,6 @@ export default class TypingSystem {
     // 處理按鍵輸入
     const handleKeyDown = (evt, handleKeyDownWithLegalKey) => {
       const key = evt.key;
-
       // 處理後退鍵
       if (key === "Backspace") {
         this.current_input = key;
