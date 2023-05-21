@@ -156,7 +156,7 @@ export default class TypingSystem {
         last_head.correct = false;
       }
 
-      if (last_head.char === " " && head[head.length - 2].char != " ") {
+      if (last_head.char === " " && head[head.length - 2]?.char != " ") {
         this.#tempdel = tail.splice(
           0,
           tail.findIndex(({ char }) => char === " ") + 1
@@ -171,7 +171,7 @@ export default class TypingSystem {
       const last_head = head?.[head.length - 1] || null;
       // 若有文字可刪除
       if (last_head) {
-        if (last_head.char === " " && head[head.length - 2].char != " ") {
+        if (last_head.char === " " && head[head.length - 2]?.char != " ") {
           tail.unshift(...this.#tempdel);
           head.pop();
         } else {
@@ -186,7 +186,14 @@ export default class TypingSystem {
 
   // 判斷輸入是否正確
   is_current_input_correct() {
-    if (this.current_input === this.tail_article[0].char) {
+    const first_tail = this.tail_article[0];
+    const last_head = this.head_article[this.head_article.length - 1];
+    const second_last_head = this.head_article[this.head_article.length - 2];
+
+    if (this.current_input === first_tail.char) {
+      if (second_last_head?.char == " " && last_head?.char == " ") {
+        return false;
+      }
       return true;
     } else {
       return false;
