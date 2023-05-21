@@ -21,7 +21,7 @@ export default function Title() {
         className={css`
           transition: transform 0.3s ease-out;
           &:hover {
-            transform: rotate(45deg);
+            transform: rotate(23deg);
           }
         `}
       >

@@ -2,7 +2,7 @@ import { cx } from "@emotion/css";
 import React from "react";
 
 import { ImEnlarge } from "react-icons/im";
-import Button from "../../../../../components/Button/Button";
+import Button from "../../../../../../components/Button/Button";
 import { MdDarkMode } from "react-icons/md";
 
 export default function Topbar() {
@@ -28,9 +28,7 @@ export default function Topbar() {
         <div>類型 : 單字</div>
       </div>
       {/* At Center */}
-      <div>
-        
-      </div>
+      <div></div>
       {/* From Right */}
       <div>
         {/* enlarge btn*/}

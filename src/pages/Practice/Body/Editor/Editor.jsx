@@ -1,16 +1,18 @@
 import { css, cx } from "@emotion/css";
-import React, { useCallback, useEffect } from "react";
-import Cursor from "./Cursor/Cursor";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import Cursor from "./components/Cursor/Cursor";
 import { useTyping } from "./hooks/useTyping";
-import Topbar from "./Topbar/Topbar";
+import Topbar from "./components/Topbar/Topbar";
 
 import { connect } from "react-redux";
 import { set_typing_data } from "../../../../redux/action/set_typing_data.act";
 import { useTypingSystem } from "../../../../core/hooks/useTypingSystem";
-import Tail from "./Tail/Tail";
+import Tail from "./components/Tail/Tail";
 import { article_generator } from "./utils/article_generator";
-import { useStartTyping } from "../../../../core/hooks/useStartTyping";
-import { useEndTyping } from "../../../../core/hooks/useEndTyping";
+import { useStartTyping } from "./hooks/useStartTyping";
+import { useEndTyping } from "./hooks/useEndTyping";
+
+import rollingGif from "./assets/Rolling-1s-200px.gif";
 
 function Editor({
   typing_data,
@@ -32,9 +34,39 @@ function Editor({
       set_typing_data(t);
     }
   );
+  /* 
+  判斷打字階段
+  "not-yet": 還沒開始打字 
+  "just-start": 剛開始打字
+  "typing": 打字超過 2 秒 
+  "end": 結束打字
+  */
+  const [typingState, setTypingState] = useState("not-yet");
 
-  useStartTyping(setStart);
-  useEndTyping(setEnd);
+  const _typing_state_typing_timeout = useRef();
+
+  // 當 鍵入 即開始
+  useStartTyping(setStart, () => {
+    setTypingState("just-start");
+    _typing_state_typing_timeout.current = setTimeout(() => {
+      setTypingState("typing");
+    }, 2000);
+  });
+  // 當 esc 即結束
+  useEndTyping(setEnd, () => {
+    setTypingState("end");
+    clearTimeout(_typing_state_typing_timeout.current);
+    // 判斷重新開始
+    let spaceCount = 0;
+    document.addEventListener("keydown", (evt) => {
+      if (evt.key === " ") {
+        spaceCount++;
+      }
+      if (spaceCount > 5) {
+        window.location.reload();
+      }
+    });
+  });
 
   return (
     <div className={cx("bg-d3", "p-0.5", "flex", "rounded-md", "shadow-md")}>
@@ -91,8 +123,54 @@ function Editor({
                   ))}
               </pre>
             </div>
-            {/* Center - cursor */}
-            <Cursor active={typing} />
+            {/* Center */}
+            <div
+              className={cx(
+                "h-full",
+                "flex justify-center items-center",
+                "relative"
+              )}
+            >
+              {/* typing message */}
+              <div
+                className={cx(
+                  "absolute",
+                  "whitespace-nowrap",
+                  "text-[16px] top-[-32px] text-m3",
+                  "flex gap-1 items-center"
+                )}
+              >
+                {(function () {
+                  switch (typingState) {
+                    case "not-yet":
+                      return (
+                        <>
+                          <img src={rollingGif} className="w-4" />
+                          輸入任意鍵開始...
+                        </>
+                      );
+                    case "just-start":
+                      return (
+                        <>
+                          <div>開始打字！</div>
+                        </>
+                      );
+                    case "typing":
+                      return <></>;
+                    case "end":
+                      return (
+                        <>
+                          <div>
+                            按 <u>Space</u> 重新開始
+                          </div>
+                        </>
+                      );
+                  }
+                })()}
+              </div>
+              {/* cursor */}
+              <Cursor active={typing} />
+            </div>
             {/* Right - going to type */}
             <div
               className={cx(
