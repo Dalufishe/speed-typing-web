@@ -13,6 +13,7 @@ import { useStartTyping } from "./hooks/useStartTyping";
 import { useEndTyping } from "./hooks/useEndTyping";
 
 import rollingGif from "./assets/Rolling-1s-200px.gif";
+import Detail from "./components/Detail/Detail";
 
 function Editor({
   typing_data,
@@ -24,16 +25,6 @@ function Editor({
   const { head_article, tail_article } = typing_data;
   // boolean, typing or not
   const [typing] = useTyping();
-  // react-hook connect to TypingSystem api
-  const [setStart, setEnd] = useTypingSystem(
-    {
-      article: article_generator(1000),
-      spanning: 60,
-    },
-    (t) => {
-      set_typing_data(t);
-    }
-  );
   /* 
   判斷打字階段
   "not-yet": 還沒開始打字 
@@ -42,31 +33,44 @@ function Editor({
   "end": 結束打字
   */
   const [typingState, setTypingState] = useState("not-yet");
-
   const _typing_state_typing_timeout = useRef();
 
-  // 當 鍵入 即開始
+  // react-hook connect to TypingSystem api
+  const [setStart, setEnd] = useTypingSystem(
+    {
+      article: article_generator(1000),
+      spanning: 60,
+    },
+    // handleKeyDownWithLegalKey
+    (t) => {
+      set_typing_data(t);
+    },
+    // ending Callback
+    () => {
+      setTypingState("end");
+      clearTimeout(_typing_state_typing_timeout.current);
+      // 判斷重新開始
+      let spaceCount = 0;
+      document.addEventListener("keydown", (evt) => {
+        if (evt.key === " ") {
+          spaceCount++;
+        }
+        if (spaceCount > 5) {
+          window.location.reload();
+        }
+      });
+    }
+  );
+
+  // 當"鍵入"即開始
   useStartTyping(setStart, () => {
     setTypingState("just-start");
     _typing_state_typing_timeout.current = setTimeout(() => {
       setTypingState("typing");
     }, 2000);
   });
-  // 當 esc 即結束
-  useEndTyping(setEnd, () => {
-    setTypingState("end");
-    clearTimeout(_typing_state_typing_timeout.current);
-    // 判斷重新開始
-    let spaceCount = 0;
-    document.addEventListener("keydown", (evt) => {
-      if (evt.key === " ") {
-        spaceCount++;
-      }
-      if (spaceCount > 5) {
-        window.location.reload();
-      }
-    });
-  });
+  // 當"esc"即結束
+  useEndTyping(setEnd);
 
   return (
     <div className={cx("bg-d3", "p-0.5", "rounded-md", "shadow-md")}>
@@ -80,7 +84,8 @@ function Editor({
           "h-[315px]",
           "bg-d3",
           "text-[150%] font-mono",
-          "flex justify-center items-center"
+          "flex justify-center items-center",
+          "relative"
         )}
       >
         {/* Typing Area Main Part */}
@@ -114,7 +119,13 @@ function Editor({
                     key={Math.random()}
                     className={cx(correct ? "text-blue-400" : "text-red-600")}
                   >
-                    {char}
+                    {(function () {
+                      if (!correct && char === " ") {
+                        return "_";
+                      } else {
+                        return char;
+                      }
+                    })()}
                   </span>
                 ))}
             </pre>
@@ -148,7 +159,7 @@ function Editor({
                   case "just-start":
                     return (
                       <>
-                        <div>開始打字！</div>
+                        <div>開始！</div>
                       </>
                     );
                   case "typing":
@@ -182,7 +193,10 @@ function Editor({
             </pre>
           </div>
         </div>
-        {/*  */}
+        {/* typing details */}
+        <div className={cx("absolute bottom-0", "w-full h-[21px]")}>
+          <Detail />
+        </div>
       </div>
       {/* editor-tail */}
       <div className="h-[21px]">

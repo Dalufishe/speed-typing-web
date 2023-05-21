@@ -3,7 +3,11 @@ import TypingSystem from "../TypingSystem";
 
 let t;
 
-const useTypingSystem = (config = {}, handleKeyDownWithLegalKey) => {
+const useTypingSystem = (
+  config = {},
+  handleKeyDownWithLegalKey,
+  endCallback
+) => {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
 
@@ -16,11 +20,11 @@ const useTypingSystem = (config = {}, handleKeyDownWithLegalKey) => {
     if (start) {
       t.start_race((t) => {
         handleKeyDownWithLegalKey(t);
-      });
+      }, endCallback);
       setStart(false);
     }
     if (end) {
-      t.end_race();
+      t.end_race(endCallback);
       setEnd(false);
     }
   }, [start, end]);

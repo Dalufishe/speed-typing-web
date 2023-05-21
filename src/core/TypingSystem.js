@@ -46,7 +46,7 @@ export default class TypingSystem {
     this.full_words_array = this.full_article
       .map(({ char }) => char)
       .join("")
-      .split(" ");
+      .split(/ +/gu);
 
     this.word_count = this.full_words_array.length;
 
@@ -60,7 +60,7 @@ export default class TypingSystem {
 
   //$ 主要方法
   // 開始測驗
-  start_race(handleKeyDownWithLegalKey = () => {}) {
+  start_race(handleKeyDownWithLegalKey = () => {}, endCallback) {
     // 獲取用戶輸入
     this.get_user_input(true, handleKeyDownWithLegalKey);
     // 倒數計時
@@ -75,16 +75,17 @@ export default class TypingSystem {
     });
     // 結束計時
     setTimeout(() => {
-      this.end_race();
+      this.end_race(endCallback);
     }, this.spanning * 1000);
   }
 
   // 結束測驗
-  end_race() {
+  end_race(cb = () => {}) {
     // 不再獲取數據
     this.get_user_input(false);
     // 結束倒計時
     clearInterval(this.#countdown_timer_interval);
+    cb(this);
   }
 
   // 內部方法，用於記憶
@@ -102,12 +103,10 @@ export default class TypingSystem {
       this.#_handleKeyDown = (evt) => {
         handleKeyDown(evt, this.#_handleKeyDownWithLegalKey);
       };
-
       document.addEventListener("keydown", this.#_handleKeyDown);
     } else {
       document.removeEventListener("keydown", this.#_handleKeyDown);
     }
-
     // 處理按鍵輸入
     const handleKeyDown = (evt, handleKeyDownWithLegalKey) => {
       const key = evt.key;
@@ -115,6 +114,7 @@ export default class TypingSystem {
       if (key === "Backspace") {
         this.current_input = key;
         this.control_article_head_tail(0);
+        this.set_words_array();
       }
 
       if (this.legal_key.includes(key)) {
@@ -123,7 +123,6 @@ export default class TypingSystem {
         this.current_input = key;
         this.control_article_head_tail();
         this.set_words_array();
-
         // callback : handleKeyDownWithLegalKey
         handleKeyDownWithLegalKey(this);
       } else {
@@ -132,27 +131,38 @@ export default class TypingSystem {
     };
   }
 
+  #tempdel = [];
+
   // 控制頭(已鍵入) 尾(未鍵入) 交互
   control_article_head_tail(type = 1) {
     const head = this.head_article;
     const tail = this.tail_article;
+
     // 鍵入字 add
     if (type === 1) {
       head.push({});
       const last_head = head[head.length - 1];
       const first_tail = tail[0];
-      // 打對字，將打過的字擠到右側，並標示為正確
+
+      last_head.char = this.current_input;
+      last_head.correct_char = first_tail.char;
+
+      // 打對字，並標示為正確
       if (this.is_current_input_correct()) {
-        last_head.char = this.current_input;
         last_head.correct = true;
-        last_head.correct_char = first_tail.char;
-        tail.shift();
       }
-      // 打錯字，將打過的字擠到右側，並標示為錯誤
+      // 打錯字，並標示為錯誤
       else {
-        last_head.char = this.current_input;
         last_head.correct = false;
-        last_head.correct_char = first_tail.char;
+      }
+
+      if (last_head.char === " " && head[head.length - 2].char != " ") {
+        this.#tempdel = tail.splice(
+          0,
+          tail.findIndex(({ char }) => char === " ") + 1
+        );
+        console.log(this.#tempdel);
+      } else {
         tail.shift();
       }
     }
@@ -161,10 +171,15 @@ export default class TypingSystem {
       const last_head = head?.[head.length - 1] || null;
       // 若有文字可刪除
       if (last_head) {
-        tail.unshift({
-          char: last_head.correct_char,
-        });
-        head.pop();
+        if (last_head.char === " " && head[head.length - 2].char != " ") {
+          tail.unshift(...this.#tempdel);
+          head.pop();
+        } else {
+          tail.unshift({
+            char: last_head.correct_char,
+          });
+          head.pop();
+        }
       }
     }
   }
@@ -201,13 +216,13 @@ export default class TypingSystem {
     this.head_words_array = head
       .map(({ char }) => char)
       .join("")
-      .split(" ")
+      .split(/ +/gu)
       .filter((char) => char != "");
 
     this.tail_words_array = tail
       .map(({ char }) => char)
       .join("")
-      .split(" ")
+      .split(/ +/gu)
       .filter((char) => char != "");
   }
 

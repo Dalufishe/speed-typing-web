@@ -7,7 +7,7 @@ const ConfigItem = ({ title }) => {
   return (
     <div
       className={cx(
-        "w-full h-[84px]",
+        "w-full h-[82px]",
         "border-2 border-d3 border-t-0",
         "flex items-center justify-between px-2"
       )}
@@ -19,16 +19,7 @@ const ConfigItem = ({ title }) => {
 
 export default function Configbox() {
   return (
-    <div
-      className={cx(
-        "w-full h-full",
-        "bg-m1",
-        "p-0.5",
-        "rounded-md",
-        "shadow-md",
-        "flex flex-col justify-between"
-      )}
-    >
+    <>
       {/* Top */}
       <div
         className={cx(
@@ -54,8 +45,6 @@ export default function Configbox() {
         <ConfigItem title="字體種類" />
         <ConfigItem title="字體大小" />
       </div>
-      {/* Tail */}
-      <div className={cx("w-full h-[21px]", "bg-d3", "rounded-sm")}></div>
-    </div>
+    </>
   );
 }

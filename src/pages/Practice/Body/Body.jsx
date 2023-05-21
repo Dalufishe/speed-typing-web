@@ -2,7 +2,8 @@ import { css, cx } from "@emotion/css";
 import React from "react";
 import Editor from "./Editor/Editor";
 import Status from "./Status/Status";
-import Configbox from "./Configbox/Configbox";
+
+import Rightbar from "./Rightbar/Rightbar";
 
 export default function Body() {
   return (
@@ -28,7 +29,7 @@ export default function Body() {
           `
         )}
       >
-        <Configbox />
+        <Rightbar />
       </div>
     </div>
   );

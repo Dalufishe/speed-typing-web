@@ -1,4 +1,4 @@
-import { cx } from "@emotion/css";
+import { cx, injectGlobal } from "@emotion/css";
 import React from "react";
 import Leftbar from "./layout/Leftbar/Leftbar";
 import Main from "./layout/Main/Main";
@@ -15,7 +15,12 @@ export default function App() {
         <Router>
           <div className={cx("text-b1", "flex", "w-screen h-screen")}>
             {/* Leftbar */}
-            <div className={cx("w-[300px] min-w-[300px] h-full")}>
+            <div
+              className={cx(
+                "w-[300px] min-w-[300px] h-full",
+                "hidden md:block"
+              )}
+            >
               <Leftbar />
             </div>
             {/* Main */}

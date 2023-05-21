@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useStartTyping = (setStart, cb, condition=[]) => {
+const useStartTyping = (setStart, cb, condition = []) => {
   useEffect(() => {
     document.addEventListener(
       "keydown",
