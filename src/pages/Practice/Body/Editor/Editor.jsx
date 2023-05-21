@@ -69,129 +69,124 @@ function Editor({
   });
 
   return (
-    <div className={cx("bg-d3", "p-0.5", "flex", "rounded-md", "shadow-md")}>
-      <div className="flex-grow">
-        {/* editor-topbar */}
-        <div className={cx("h-[28px]")}>
-          <Topbar />
-        </div>
-        {/* Typing Area */}
+    <div className={cx("bg-d3", "p-0.5", "rounded-md", "shadow-md")}>
+      {/* editor-topbar */}
+      <div className={cx("h-[28px]")}>
+        <Topbar />
+      </div>
+      {/* Typing Area */}
+      <div
+        className={cx(
+          "h-[315px]",
+          "bg-d3",
+          "text-[150%] font-mono",
+          "flex justify-center items-center"
+        )}
+      >
+        {/* Typing Area Main Part */}
         <div
           className={cx(
-            "h-[315px]",
+            "w-[99%] h-[63px]",
             "bg-d3",
-            "text-[150%] font-mono",
+            "brightness-125",
+            "shadow-lg",
             "flex justify-center items-center"
           )}
         >
-          {/* Typing Area Main Part */}
+          {/* Left - typed */}
           <div
             className={cx(
-              "h-[63px]",
-              "bg-d3",
-              "brightness-125",
-              "shadow-lg",
-              "flex items-center",
-              css`
-                width: calc(100vw - 300px - 20px - 20px);
-              `
+              "w-[33%]",
+              "flex items-center justify-end",
+              "whitespace-nowrap",
+              "overflow-hidden"
             )}
           >
-            {/* Left - typed */}
-            <div
-              className={cx(
-                "w-[33%]",
-                "flex items-center justify-end",
-                "whitespace-nowrap",
-                "overflow-hidden"
-              )}
-            >
-              <pre className={cx("w-fit")}>
-                {/* 提升效能 : 只擷取片段文章渲染 */}
-                {head_article
-                  .slice(
-                    head_article.length - 40 > 0 ? head_article.length - 40 : 0,
-                    head_article.length
-                  )
-                  .map(({ char, correct }) => (
-                    <span
-                      key={Math.random()}
-                      className={cx(correct ? "text-blue-400" : "text-red-600")}
-                    >
-                      {char}
-                    </span>
-                  ))}
-              </pre>
-            </div>
-            {/* Center */}
-            <div
-              className={cx(
-                "h-full",
-                "flex justify-center items-center",
-                "relative"
-              )}
-            >
-              {/* typing message */}
-              <div
-                className={cx(
-                  "absolute",
-                  "whitespace-nowrap",
-                  "text-[16px] top-[-32px] text-m3",
-                  "flex gap-1 items-center"
-                )}
-              >
-                {(function () {
-                  switch (typingState) {
-                    case "not-yet":
-                      return (
-                        <>
-                          <img src={rollingGif} className="w-4" />
-                          輸入任意鍵開始...
-                        </>
-                      );
-                    case "just-start":
-                      return (
-                        <>
-                          <div>開始打字！</div>
-                        </>
-                      );
-                    case "typing":
-                      return <></>;
-                    case "end":
-                      return (
-                        <>
-                          <div>
-                            按 <u>Space</u> 重新開始
-                          </div>
-                        </>
-                      );
-                  }
-                })()}
-              </div>
-              {/* cursor */}
-              <Cursor active={typing} />
-            </div>
-            {/* Right - going to type */}
-            <div
-              className={cx(
-                "w-[66%]",
-                "flex justify-start items-center",
-                "whitespace-nowrap",
-                "overflow-hidden"
-              )}
-            >
-              <pre className={cx("w-full")}>
-                {/* 提升效能 : 只擷取片段文章渲染 */}
-                {tail_article.slice(0, 80).map(({ char }) => char)}
-              </pre>
-            </div>
+            <pre className={cx("w-fit")}>
+              {/* 提升效能 : 只擷取片段文章渲染 */}
+              {head_article
+                .slice(
+                  head_article.length - 40 > 0 ? head_article.length - 40 : 0,
+                  head_article.length
+                )
+                .map(({ char, correct }) => (
+                  <span
+                    key={Math.random()}
+                    className={cx(correct ? "text-blue-400" : "text-red-600")}
+                  >
+                    {char}
+                  </span>
+                ))}
+            </pre>
           </div>
-          {/*  */}
+          {/* Center */}
+          <div
+            className={cx(
+              "h-full",
+              "flex justify-center items-center",
+              "relative"
+            )}
+          >
+            {/* typing message */}
+            <div
+              className={cx(
+                "absolute",
+                "whitespace-nowrap",
+                "text-[16px] top-[-32px] text-m3",
+                "flex gap-1 items-center"
+              )}
+            >
+              {(function () {
+                switch (typingState) {
+                  case "not-yet":
+                    return (
+                      <>
+                        <img src={rollingGif} className="w-4" />
+                        輸入任意鍵開始...
+                      </>
+                    );
+                  case "just-start":
+                    return (
+                      <>
+                        <div>開始打字！</div>
+                      </>
+                    );
+                  case "typing":
+                    return <></>;
+                  case "end":
+                    return (
+                      <>
+                        <div>
+                          長按 <u>Space</u> 重新開始
+                        </div>
+                      </>
+                    );
+                }
+              })()}
+            </div>
+            {/* cursor */}
+            <Cursor active={typing} />
+          </div>
+          {/* Right - going to type */}
+          <div
+            className={cx(
+              "w-[66%]",
+              "flex justify-start items-center",
+              "whitespace-nowrap",
+              "overflow-hidden"
+            )}
+          >
+            <pre className={cx("w-full")}>
+              {/* 提升效能 : 只擷取片段文章渲染 */}
+              {tail_article.slice(0, 80).map(({ char }) => char)}
+            </pre>
+          </div>
         </div>
-        {/* editor-tail */}
-        <div className="h-[21px]">
-          <Tail />
-        </div>
+        {/*  */}
+      </div>
+      {/* editor-tail */}
+      <div className="h-[21px]">
+        <Tail />
       </div>
     </div>
   );

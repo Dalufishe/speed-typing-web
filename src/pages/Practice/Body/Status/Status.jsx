@@ -1,5 +1,5 @@
 import { css, cx } from "@emotion/css";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { BiTime, BiRun } from "react-icons/bi";
 import { BsLightningCharge } from "react-icons/bs";
 import { RxLetterCaseCapitalize } from "react-icons/rx";
@@ -37,28 +37,29 @@ const Statusbox = ({ icon, value, unit, title, className }) => {
 };
 
 function Status({ typing_data, set_typing_data, typing_data_id }) {
-  const { time_remaining, wpm, accurarcy, full_words_array, head_words_array } =
-    typing_data;
+  const { time_remaining, wpm, accurarcy } = typing_data;
   // 倒數計時器
   useEffect(() => {
     setTimeout(() => {
       set_typing_data();
     }, 1000);
   }, [typing_data_id]);
+
   return (
     <div
       className={cx(
+        "overflow-y-hidden",
+        css`
+          overflow-x: overlay;
+        `,
         "mt-5",
         "p-3",
         "h-[88px]",
         "bg-d3",
         "rounded-md",
         "shadow-md",
-        "flex items-center gap-3",
-        "border-[1.5px] border-m1",
-        css`
-          width: calc(100vw - 300px - 20px - 20px + 4px);
-        `
+        "flex justify-center items-center gap-3",
+        "border-[1.5px] border-m1"
       )}
     >
       {/* left-box */}
