@@ -43,7 +43,7 @@ export default class TypingSystem {
       return {
         char,
       };
-    });
+    }); 
 
     this.full_words_array = this.full_article
       .map(({ char }) => char)
