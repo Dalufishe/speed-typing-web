@@ -99,7 +99,7 @@ function HistoryStatus({ history_data }) {
   const handleRight = useCallback(function ({ spanning, wpm, time_remaining }) {
     return spanning - time_remaining === spanning ? wpm.toFixed(1) : "DNF";
   });
-
+ 
   const getBestScore = useCallback(() => {
     let highest = history_data[0]?.wpm;
     for (let i = 1; i < history_data.length; i++) {
