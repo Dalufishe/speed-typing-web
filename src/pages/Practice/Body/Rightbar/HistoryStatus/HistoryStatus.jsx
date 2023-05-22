@@ -69,11 +69,11 @@ const HistoryStatusItem = ({ left, center, right }) => {
 
 function HistoryStatus({ history_data }) {
   // fns
-  const handleLeft = useCallback(function () {
+  const handleLeft = useCallback(function ({ index }) {
     let time = new Date().toISOString();
     time = time.slice(0, time.indexOf("T"));
     let count = history_data.length;
-    return time + ` [${count}]`;
+    return time + ` [${count - index}]`;
   });
   const handleCenter = useCallback(function ({
     spanning,
@@ -143,7 +143,7 @@ function HistoryStatus({ history_data }) {
           <HistoryStatusItem
             key={Math.random()}
             left={(() => {
-              return handleLeft();
+              return handleLeft({ index });
             })()}
             center={(() => {
               return handleCenter({ wpm, time_remaining, spanning, index });
