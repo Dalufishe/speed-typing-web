@@ -1,4 +1,4 @@
-import { css, cx } from "@emotion/css";
+import { cx } from "@emotion/css";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Cursor from "./components/Cursor/Cursor";
 import { useTyping } from "./hooks/useTyping";
@@ -6,14 +6,17 @@ import Topbar from "./components/Topbar/Topbar";
 
 import { connect } from "react-redux";
 import { set_typing_data } from "../../../../redux/action/set_typing_data.act";
-import { useTypingSystem } from "../../../../core/hooks/useTypingSystem";
+
 import Tail from "./components/Tail/Tail";
-import { article_generator } from "./utils/article_generator";
-import { useStartTyping } from "./hooks/useStartTyping";
-import { useEndTyping } from "./hooks/useEndTyping";
 
 import rollingGif from "./assets/Rolling-1s-200px.gif";
 import Detail from "./components/Detail/Detail";
+import { useStartTyping } from "./hooks/useStartTyping";
+import { useEndTyping } from "./hooks/useEndTyping";
+import TypingSystem from "../../../../core/TypingSystem";
+import { article_generator } from "../../utils/article_generator";
+
+const article = article_generator(1000);
 
 function Editor({
   typing_data,
@@ -35,42 +38,59 @@ function Editor({
   const [typingState, setTypingState] = useState("not-yet");
   const _typing_state_typing_timeout = useRef();
 
-  // react-hook connect to TypingSystem api
-  const [setStart, setEnd] = useTypingSystem(
-    {
-      article: article_generator(1000),
-      spanning: 60,
-    },
-    // handleKeyDownWithLegalKey
-    (t) => {
-      set_typing_data(t);
-    },
-    // ending Callback
-    () => {
-      setTypingState("end");
-      clearTimeout(_typing_state_typing_timeout.current);
-      // 判斷重新開始
-      let spaceCount = 0;
-      document.addEventListener("keydown", (evt) => {
-        if (evt.key === " ") {
-          spaceCount++;
-        }
-        if (spaceCount > 5) {
-          window.location.reload();
-        }
-      });
-    }
+  // 建立 typingsystem 物件
+  const t = useRef(
+    new TypingSystem({
+      article: article,
+      spanning: 30,
+    }),
+    []
   );
 
-  // 當"鍵入"即開始
-  useStartTyping(setStart, () => {
-    setTypingState("just-start");
-    _typing_state_typing_timeout.current = setTimeout(() => {
-      setTypingState("typing");
-    }, 2000);
-  });
-  // 當"esc"即結束
-  useEndTyping(setEnd);
+  // 預設渲染
+  useEffect(() => {
+    set_typing_data(t.current);
+  }, []);
+
+  // useStartTyping : 當輸入任意建, 即...
+  useStartTyping(
+    useCallback(() => {
+      // init
+      setTypingState("just-start");
+      _typing_state_typing_timeout.current = setTimeout(() => {
+        setTypingState("typing");
+      }, 2000);
+      // 渲染更新
+      set_typing_data(t.current);
+      // start_race
+      t.current.start_race((t) => {
+        // 渲染更新
+        set_typing_data(t);
+      });
+    }),
+    []
+  );
+
+  // useStartTyping: 當輸入 esc , 即...
+  useEndTyping(
+    useCallback(() => {
+      t.current.end_race(() => {
+        setTypingState("end");
+        clearTimeout(_typing_state_typing_timeout.current);
+        // 判斷重新開始
+        let spaceCount = 0;
+        document.addEventListener("keydown", (evt) => {
+          if (evt.key === " ") {
+            spaceCount++;
+          }
+          if (spaceCount > 5) {
+            window.location.reload();
+          }
+        });
+      });
+    }),
+    []
+  );
 
   return (
     <div className={cx("bg-d3", "p-0.5", "rounded-md", "shadow-md")}>

@@ -1,10 +1,11 @@
 import { css, cx } from "@emotion/css";
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import turtleIcon from "./assets/turtle.png";
 
 import { tailwindcssConfig } from "../../../../../config/tailwind-js.config";
+import { connect } from "react-redux";
 
-const HistoryStatusItem = ({ title, className }) => {
+const BestScoreItem = ({ children, className }) => {
   return (
     <div
       className={cx(
@@ -42,14 +43,74 @@ const HistoryStatusItem = ({ title, className }) => {
         className
       )}
     >
-      {title}
+      {children}
     </div>
   );
 };
 
-export default function HistoryStatus() {
+const HistoryStatusItem = ({ left, center, right }) => {
   return (
-    <>
+    <div
+      className={cx(
+        " px-2",
+        "w-full h-[60px]",
+        "flex items-center justify-between",
+        "border-2 border-d3 border-t-0"
+      )}
+    >
+      <div>{left}</div>
+      <div className="flex gap-5">
+        <div className="text-blue-400">{center}</div>
+        <div className="font-bold">{right}</div>
+      </div>
+    </div>
+  );
+};
+
+function HistoryStatus({ history_data }) {
+  // fns
+  const handleLeft = useCallback(function () {
+    let time = new Date().toISOString();
+    time = time.slice(0, time.indexOf("T"));
+    let count = history_data.length;
+    return time + ` [${count}]`;
+  });
+  const handleCenter = useCallback(function ({
+    spanning,
+    wpm,
+    time_remaining,
+    index,
+  }) {
+    const previous = history_data[index + 1];
+    let subtract;
+    if (
+      spanning - time_remaining === spanning &&
+      previous?.spanning - previous?.time_remaining === previous?.spanning
+    ) {
+      subtract = wpm - previous?.wpm;
+      subtract = subtract.toFixed(1);
+    } else {
+      subtract = "DNF";
+    }
+    // 第一次不計
+    if (index === history_data.length - 1) subtract = "";
+    return subtract;
+  });
+  const handleRight = useCallback(function ({ spanning, wpm, time_remaining }) {
+    return spanning - time_remaining === spanning ? wpm.toFixed(1) : "DNF";
+  });
+
+  const getBestScore = useCallback(() => {
+    let highest = history_data[0].wpm;
+    for (let i = 1; i < history_data.length; i++) {
+      if (history_data[i].wpm > highest) {
+        highest = history_data[i].wpm;
+      }
+    }
+    return highest;
+  });
+  return (
+    <div className={cx("h-full", "relative", "text-[16px]", "font-mono")}>
       {/* Top */}
       <div
         className={cx(
@@ -62,25 +123,70 @@ export default function HistoryStatus() {
           "px-2"
         )}
       >
-        <div className={cx("flex items-center gap-1")}>
+        <div className={cx("w-full", "flex justify-between items-center")}>
           <div>歷史紀錄</div>
+          <div className="flex justify-around items-center gap-5">
+            <div className="text-m3">w/m</div>
+          </div>
         </div>
       </div>
       {/* Content */}
-      <div className={cx("flex-grow")}>
-        <HistoryStatusItem
-          className="bg-m2"
-          title={
-            <div className="flex items-center gap-2">
-              <img src={turtleIcon} className="w-20" />
-              <div className="translate-y-0.5">
-                <div className="text-[12px] italic">5 w/m ~ 10 w/m</div>
-                <div className="text-[24px] font-bold">烏龜</div>
+      <div
+        className={cx(
+          "overflow-auto",
+          css`
+            height: calc(100% - 28px - 90px);
+          `
+        )}
+      >
+        {history_data.map(({ wpm, time_remaining, spanning }, index) => (
+          <HistoryStatusItem
+            key={Math.random()}
+            left={(() => {
+              return handleLeft();
+            })()}
+            center={(() => {
+              return handleCenter({ wpm, time_remaining, spanning, index });
+            })()}
+            right={(() => {
+              return handleRight({ wpm, time_remaining, spanning });
+            })()}
+          />
+        ))}
+      </div>
+      {/* Bottom */}
+      <div className={cx("absolute bottom-0", "w-full")}>
+        {/* Best */}
+        <BestScoreItem className="bg-m2 border-t-2 border-b-0">
+          <div className="flex items-center gap-2">
+            <img src={turtleIcon} className="w-20" />
+            <div className="translate-y-0.5">
+              <div className="text-[16px]">
+                {(function () {
+                  const bestscore = getBestScore();
+                  if (bestscore < 10) return "蝸牛";
+                  if (bestscore < 20) return "烏龜";
+                  if (bestscore < 30) return "兔子";
+                  if (bestscore < 30) return "貓";
+                  if (bestscore < 50) return "獵豹";
+                  if (bestscore < 60) return "鯊魚";
+                })()}
+              </div>
+              <div className="text-[24px] font-bold text-blue-300">
+                {getBestScore()} w/m
               </div>
             </div>
-          }
-        />
+          </div>
+        </BestScoreItem>
       </div>
-    </>
+    </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    history_data: state.history_data.data,
+  };
+};
+
+export default connect(mapStateToProps)(HistoryStatus);

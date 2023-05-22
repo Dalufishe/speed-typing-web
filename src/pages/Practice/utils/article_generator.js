@@ -1,4 +1,4 @@
-import { words } from "../../../../../data/words";
+import { words } from "../../../data/words";
 
 const article_generator = (wordCount) => {
   let article = "";

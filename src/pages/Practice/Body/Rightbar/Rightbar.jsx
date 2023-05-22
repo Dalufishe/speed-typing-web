@@ -17,11 +17,13 @@ export default function Rightbar() {
         "flex flex-col justify-between"
       )}
     >
-      <div>
+      <div className={cx("h-full", "flex flex-col")}>
         {/* Configbox */}
         <Configbox />
         {/* HistoryStatus */}
-        <HistoryStatus />
+        <div className="flex-grow">
+          <HistoryStatus />
+        </div>
       </div>
       {/* Tail */}
       <div className={cx("w-full h-[21px]", "bg-d3", "rounded-sm")}></div>

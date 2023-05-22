@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "./Header/Header";
 import Body from "./Body/Body";
-
 import { cx } from "@emotion/css";
 
 export default function Practice() {

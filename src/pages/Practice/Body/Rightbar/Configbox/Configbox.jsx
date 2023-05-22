@@ -19,7 +19,7 @@ const ConfigItem = ({ title }) => {
 
 export default function Configbox() {
   return (
-    <>
+    <div>
       {/* Top */}
       <div
         className={cx(
@@ -45,6 +45,6 @@ export default function Configbox() {
         <ConfigItem title="字體種類" />
         <ConfigItem title="字體大小" />
       </div>
-    </>
+    </div>
   );
 }

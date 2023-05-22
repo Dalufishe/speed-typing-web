@@ -7,13 +7,14 @@ import reduxThunk from "redux-thunk";
 // reducers
 
 import { typing_data } from "./reducer/typing_data.rdc";
+import { history_data } from "./reducer/history_data.rdc";
 
-const reducer = combineReducers({ typing_data });
+const reducer = combineReducers({ typing_data, history_data });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: [],
+  whitelist: ["history_data"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

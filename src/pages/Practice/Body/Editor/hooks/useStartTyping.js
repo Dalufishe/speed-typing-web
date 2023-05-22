@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 
-const useStartTyping = (setStart, cb, condition = []) => {
+const useStartTyping = (cb=()=>{}, condition = []) => {
   useEffect(() => {
     document.addEventListener(
       "keydown",
       () => {
-        setStart(true);
         cb();
       },
       { once: true }

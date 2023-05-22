@@ -1,49 +1,82 @@
 import { css, cx } from "@emotion/css";
-import React, { useCallback, useEffect } from "react";
-import { BiTime, BiRun } from "react-icons/bi";
+import React, { useEffect, useRef } from "react";
+import { BiTime } from "react-icons/bi";
 import { BsLightningCharge } from "react-icons/bs";
 import { RxLetterCaseCapitalize } from "react-icons/rx";
 import Button from "../../../../components/Button/Button";
 import { connect } from "react-redux";
 import { set_typing_data } from "../../../../redux/action/set_typing_data.act";
+import { animated, useSpring } from "@react-spring/web";
+import { useHover } from "../../../../hooks/useHover";
+import { set_history_data } from "../../../../redux/action/set_history_data.act";
 
 const Statusbox = ({ icon, value, unit, title, className }) => {
+  const [hover, isHover] = useHover();
+  const [springs, api] = useSpring(() => {
+    return {
+      from: { y: 0 },
+    };
+  });
+
+  useEffect(() => {
+    if (isHover) {
+      api.start({ y: -6 });
+    } else {
+      api.start({ y: 0 });
+    }
+  }, [isHover]);
+
   return (
     <div
+      ref={hover}
       className={cx(
+        "cursor-default",
         "px-5 py-4",
         "bg-d2",
         "border-[1.5px] border-m1",
         "rounded-md",
         "shadow-md",
-        "flex items-center gap-2",
         "text-[20px]",
         "whitespace-nowrap",
         className
       )}
     >
-      <div className="flex items-center gap-1 translate-y-[1px]">
-        <div>{icon}</div>
-        <div className="text-[8px]">{title} /</div>
-      </div>
-      <div className={cx("flex items-end gap-1")}>
-        <div className={cx("font-bold")}>{value}</div>
-        <div className={cx("text-[12px] italic", "translate-y-[-3px]")}>
-          {unit}
+      <animated.div style={springs} className="flex items-center gap-2">
+        <div className="flex items-center gap-1 translate-y-[1px]">
+          <div>{icon}</div>
+          <div className="text-[8px]">{title} /</div>
         </div>
-      </div>
+        <div className={cx("flex items-end gap-1")}>
+          <div className={cx("font-bold")}>{value}</div>
+          <div className={cx("text-[12px] italic", "translate-y-[-3px]")}>
+            {unit}
+          </div>
+        </div>
+      </animated.div>
     </div>
   );
 };
 
-function Status({ typing_data, set_typing_data, typing_data_id }) {
-  const { time_remaining, wpm, accurarcy } = typing_data;
+function Status({ typing_data, set_typing_data, set_history_data }) {
+  const { time_remaining, wpm, accurarcy, is_start } = typing_data;
+
+  const count = useRef(0);
   // 倒數計時器
   useEffect(() => {
-    setTimeout(() => {
-      set_typing_data();
-    }, 1000);
-  }, [typing_data_id]);
+    // 更新狀態條
+    if (is_start) {
+      setTimeout(() => {
+        set_typing_data();
+        count.current += 1;
+      }, 1000);
+    }
+    // 將狀態加入歷史紀錄
+    else {
+      if (count.current != 0) {
+        set_history_data(typing_data);
+      }
+    }
+  }, [is_start, count.current]);
 
   return (
     <div
@@ -103,7 +136,7 @@ function Status({ typing_data, set_typing_data, typing_data_id }) {
         <Statusbox
           icon={<RxLetterCaseCapitalize />}
           title={<span className="hidden lg:inline">每秒字數</span>}
-          value={wpm.toFixed(0)}
+          value={wpm.toFixed(1)}
           unit="w/m"
         />
         {/* Accurarcy */}
@@ -127,6 +160,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   set_typing_data,
+  set_history_data,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Status);

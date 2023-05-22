@@ -30,6 +30,8 @@ export default class TypingSystem {
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-'\" ";
   current_input; // :string
 
+  is_start = false;
+
   /**@constructor */
 
   constructor({
@@ -52,7 +54,6 @@ export default class TypingSystem {
 
     this.head_article = [];
     this.tail_article = [...this.full_article];
-
     this.spanning = this.time_remaining = spanning;
   }
 
@@ -60,7 +61,9 @@ export default class TypingSystem {
 
   //$ 主要方法
   // 開始測驗
-  start_race(handleKeyDownWithLegalKey = () => {}, endCallback) {
+  start_race(handleKeyDownWithLegalKey = () => {}, endCallback = () => {}) {
+    // 狀態為開始
+    this.is_start = true;
     // 獲取用戶輸入
     this.get_user_input(true, handleKeyDownWithLegalKey);
     // 倒數計時
@@ -81,6 +84,8 @@ export default class TypingSystem {
 
   // 結束測驗
   end_race(cb = () => {}) {
+    // 狀態為結束
+    this.is_start = false;
     // 不再獲取數據
     this.get_user_input(false);
     // 結束倒計時
@@ -161,7 +166,6 @@ export default class TypingSystem {
           0,
           tail.findIndex(({ char }) => char === " ") + 1
         );
-        console.log(this.#tempdel);
       } else {
         tail.shift();
       }
