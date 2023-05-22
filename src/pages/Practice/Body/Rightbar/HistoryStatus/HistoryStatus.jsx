@@ -101,10 +101,10 @@ function HistoryStatus({ history_data }) {
   });
 
   const getBestScore = useCallback(() => {
-    let highest = history_data[0].wpm;
+    let highest = history_data[0]?.wpm;
     for (let i = 1; i < history_data.length; i++) {
-      if (history_data[i].wpm > highest) {
-        highest = history_data[i].wpm;
+      if (history_data[i]?.wpm > highest) {
+        highest = history_data[i]?.wpm;
       }
     }
     return highest;
