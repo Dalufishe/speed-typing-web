@@ -2,18 +2,18 @@ import { cx } from "@emotion/css";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ROUTE } from "../../../../constant/route.const";
-
 import { IoIosColorPalette } from "react-icons/io";
 import { MdLeaderboard } from "react-icons/md";
 import { FaPlug } from "react-icons/fa";
 import { AiFillTrophy, AiFillFire } from "react-icons/ai";
 import { GiAchievement } from "react-icons/gi";
-
 import QuestionBtn from "../../../../components/QuestionBtn/QuestionBtn";
 import BackBtn from "../../../../components/BackBtn/BackBtn";
 import MoreBtn from "../../../../components/MoreBtn/MoreBtn";
+import { connect } from "react-redux";
+import { set_notyet_popup } from "../../../../redux/action/set_notyet_popup.act";
 
-export default function OptionList() {
+function OptionList({ set_notyet_popup }) {
   const history = useHistory();
   const [page, setPage] = useState(1);
   return (
@@ -39,7 +39,8 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.status);
+              set_notyet_popup(true);
+              // history.push(ROUTE.status);
             }}
           >
             <MdLeaderboard />
@@ -51,7 +52,8 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.plugin);
+              set_notyet_popup(true);
+              // history.push(ROUTE.plugin);
             }}
           >
             <FaPlug />
@@ -76,7 +78,8 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.theme);
+              set_notyet_popup(true);
+              // history.push(ROUTE.theme);
             }}
           >
             <IoIosColorPalette />
@@ -88,7 +91,8 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.achievement);
+              set_notyet_popup(true);
+              // history.push(ROUTE.achievement);
             }}
           >
             <GiAchievement />
@@ -100,7 +104,8 @@ export default function OptionList() {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              history.push(ROUTE.leaderboard);
+              set_notyet_popup(true);
+              // history.push(ROUTE.leaderboard);
             }}
           >
             <AiFillTrophy />
@@ -119,3 +124,9 @@ export default function OptionList() {
     </div>
   );
 }
+
+const mapDispatchToProps = {
+  set_notyet_popup,
+};
+
+export default connect(null, mapDispatchToProps)(OptionList);

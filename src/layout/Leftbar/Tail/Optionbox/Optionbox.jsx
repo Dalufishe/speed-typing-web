@@ -7,9 +7,11 @@ import { AiFillGithub, AiFillSetting } from "react-icons/ai";
 export default function Optionbox() {
   return (
     <div className={cx("flex items-center gap-2")}>
-      <Button px={8} py={8}>
-        <AiFillGithub />
-      </Button>
+      <a href="https://github.com/Dalufishe/speed-typing-web" target="_blank">
+        <Button px={8} py={8}>
+          <AiFillGithub />
+        </Button>
+      </a>
       <Button px={8} py={8}>
         <AiFillSetting />
       </Button>

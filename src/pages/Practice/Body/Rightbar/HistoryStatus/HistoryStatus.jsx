@@ -9,7 +9,7 @@ const BestScoreItem = ({ children, className }) => {
   return (
     <div
       className={cx(
-        "w-full h-[90px]",
+        "w-full h-[84px]",
         "border-2 border-d3 border-t-0",
         "flex items-center justify-between px-2",
         css`
@@ -53,13 +53,13 @@ const HistoryStatusItem = ({ left, center, right }) => {
     <div
       className={cx(
         " px-2",
-        "w-full h-[60px]",
+        "w-full h-[63px]",
         "flex items-center justify-between",
         "border-2 border-d3 border-t-0"
       )}
     >
       <div>{left}</div>
-      <div className="flex gap-5">
+      <div className="flex w-20 justify-between">
         <div>{center}</div>
         <div className="font-bold">{right}</div>
       </div>
@@ -84,18 +84,22 @@ function HistoryStatus({ history_data }) {
     const previous = history_data[index + 1];
     let subtract;
     if (
+      // 當下並未 DNF
       spanning - time_remaining === spanning &&
+      // 上輪並未 DNF
       previous?.spanning - previous?.time_remaining === previous?.spanning
     ) {
       subtract = wpm - previous?.wpm;
       subtract = subtract.toFixed(1);
     } else if (
-      previous?.spanning - previous?.time_remaining !=
-      previous?.spanning
+      // 當下並未 DNF
+      spanning - time_remaining === spanning &&
+      // 上輪 DNF
+      previous?.spanning - previous?.time_remaining != previous?.spanning
     ) {
       subtract = wpm;
     } else {
-      subtract = "DNF";
+      subtract = 0;
     }
     // 第一次不計
     if (index === history_data.length - 1) subtract = "";

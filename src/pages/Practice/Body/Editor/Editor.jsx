@@ -19,13 +19,12 @@ import { article_generator } from "../../utils/article_generator";
 const article = article_generator(1000);
 
 function Editor({
-  typing_data,
+  head_article,
+  tail_article,
   set_typing_data,
   /* render immediatly */
-  _id,
+  id,
 }) {
-  // get data
-  const { head_article, tail_article } = typing_data;
   // boolean, typing or not
   const [typing] = useTyping();
   /* 
@@ -245,7 +244,8 @@ function Editor({
 
 const mapStateToProps = (state) => {
   return {
-    typing_data: state.typing_data.data,
+    head_article: state.typing_data.data.head_article,
+    tail_article: state.typing_data.data.tail_article,
     id: state.typing_data._id,
   };
 };
