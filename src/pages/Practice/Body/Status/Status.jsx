@@ -12,19 +12,6 @@ import { set_history_data } from "../../../../redux/action/set_history_data.act"
 
 const Statusbox = ({ icon, value, unit, title, className }) => {
   const [hover, isHover] = useHover();
-  const [springs, api] = useSpring(() => {
-    return {
-      from: { y: 0 },
-    };
-  });
-
-  useEffect(() => {
-    if (isHover) {
-      api.start({ y: -6 });
-    } else {
-      api.start({ y: 0 });
-    }
-  }, [isHover]);
 
   return (
     <div
@@ -41,18 +28,30 @@ const Statusbox = ({ icon, value, unit, title, className }) => {
         className
       )}
     >
-      <animated.div style={springs} className="flex items-center gap-2">
+      <div className="flex items-center gap-2">
         <div className="flex items-center gap-1 translate-y-[1px]">
           <div>{icon}</div>
           <div className="text-[8px]">{title} /</div>
         </div>
-        <div className={cx("flex items-end gap-1")}>
+        <div
+          className={cx(
+            "flex items-end gap-1",
+            css`
+              transition: scale .15s ease-in-out;
+              scale: 1;
+            `,
+            isHover &&
+              css`
+                scale: 1.15;
+              `
+          )}
+        >
           <div className={cx("font-bold")}>{value}</div>
           <div className={cx("text-[12px] italic", "translate-y-[-3px]")}>
             {unit}
           </div>
         </div>
-      </animated.div>
+      </div>
     </div>
   );
 };

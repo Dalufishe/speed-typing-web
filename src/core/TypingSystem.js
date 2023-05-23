@@ -99,6 +99,11 @@ export default class TypingSystem {
 
   //$ 工具方法
 
+  // 設置時間
+  set_time(time) {
+    this.spanning = this.time_remaining = time;
+  }
+
   // 獲取使用者輸入，並作為開關
   get_user_input(enable = true, handleKeyDownWithLegalKey) {
     if (enable) {

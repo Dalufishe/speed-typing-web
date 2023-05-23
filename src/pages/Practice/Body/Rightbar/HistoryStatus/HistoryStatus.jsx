@@ -1,9 +1,9 @@
 import { css, cx } from "@emotion/css";
-import React, { useCallback, useRef } from "react";
-import turtleIcon from "./assets/turtle.png";
-
+import React, { useCallback } from "react";
 import { tailwindcssConfig } from "../../../../../config/tailwind-js.config";
 import { connect } from "react-redux";
+
+import turtleIcon from "./assets/turtle.png";
 
 const BestScoreItem = ({ children, className }) => {
   return (
@@ -59,9 +59,9 @@ const HistoryStatusItem = ({ left, center, right }) => {
       )}
     >
       <div>{left}</div>
-      <div className="flex w-20 justify-between">
+      <div className="flex justify-end gap-5">
         <div>{center}</div>
-        <div className="font-bold">{right}</div>
+        <div className="font-bold w-9">{right}</div>
       </div>
     </div>
   );
@@ -195,7 +195,7 @@ function HistoryStatus({ history_data }) {
           <div className="flex items-center gap-2">
             <img src={turtleIcon} className="w-20" />
             <div className="translate-y-0.5">
-              <div className="text-[16px]">
+              <div className="text-[16px] translate-y-1">
                 {(function () {
                   const bestscore = getBestScore();
                   if (bestscore < 10) return "蝸牛";
@@ -206,8 +206,9 @@ function HistoryStatus({ history_data }) {
                   if (bestscore < 60) return "鯊魚";
                 })()}
               </div>
-              <div className="text-[24px] font-bold text-blue-300">
-                {getBestScore()} w/m
+              <div className="text-[32px] font-bold text-blue-300 flex gap-2 items-center">
+                {getBestScore()}.0
+                <span className="text-[16px] translate-y-1">w/m</span>
               </div>
             </div>
           </div>

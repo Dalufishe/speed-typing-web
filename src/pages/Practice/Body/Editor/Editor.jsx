@@ -13,18 +13,16 @@ import rollingGif from "./assets/Rolling-1s-200px.gif";
 import Detail from "./components/Detail/Detail";
 import { useStartTyping } from "./hooks/useStartTyping";
 import { useEndTyping } from "./hooks/useEndTyping";
-import TypingSystem from "../../../../core/TypingSystem";
-import { article_generator } from "../../utils/article_generator";
-
-const article = article_generator(1000);
 
 function Editor({
-  head_article,
-  tail_article,
+  typing_data,
   set_typing_data,
+  hint,
   /* render immediatly */
   id,
 }) {
+  const { head_article, tail_article } = typing_data;
+
   // boolean, typing or not
   const [typing] = useTyping();
   /* 
@@ -37,20 +35,6 @@ function Editor({
   const [typingState, setTypingState] = useState("not-yet");
   const _typing_state_typing_timeout = useRef();
 
-  // 建立 typingsystem 物件
-  const t = useRef(
-    new TypingSystem({
-      article: article,
-      spanning: 30,
-    }),
-    []
-  );
-
-  // 預設渲染
-  useEffect(() => {
-    set_typing_data(t.current);
-  }, []);
-
   // useStartTyping : 當輸入任意建, 即...
   useStartTyping(
     useCallback(() => {
@@ -60,9 +44,9 @@ function Editor({
         setTypingState("typing");
       }, 2000);
       // 渲染更新
-      set_typing_data(t.current);
+      set_typing_data(typing_data);
       // start_race
-      t.current.start_race(
+      typing_data.start_race(
         (t) => {
           // 渲染更新
           set_typing_data(t);
@@ -90,7 +74,7 @@ function Editor({
   // useStartTyping: 當輸入 esc , 即...
   useEndTyping(
     useCallback(() => {
-      t.current.end_race(() => {
+      typing_data.end_race(() => {
         setTypingState("end");
         clearTimeout(_typing_state_typing_timeout.current);
         // 判斷重新開始
@@ -153,7 +137,9 @@ function Editor({
                 .map(({ char, correct }) => (
                   <span
                     key={Math.random()}
-                    className={cx(correct ? "text-blue-400" : "text-red-600")}
+                    className={cx(
+                      hint && (correct ? "text-blue-400" : "text-red-600")
+                    )}
                   >
                     {(function () {
                       if (!correct && char === " ") {
@@ -244,8 +230,8 @@ function Editor({
 
 const mapStateToProps = (state) => {
   return {
-    head_article: state.typing_data.data.head_article,
-    tail_article: state.typing_data.data.tail_article,
+    typing_data: state.typing_data.data,
+    hint: state.hint_or_not.hint,
     id: state.typing_data._id,
   };
 };

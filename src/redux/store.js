@@ -9,12 +9,18 @@ import storage from "redux-persist-indexeddb-storage";
 import { typing_data } from "./reducer/typing_data.rdc";
 import { history_data } from "./reducer/history_data.rdc";
 import { notyet_popup } from "./reducer/notyet_popup.rdc";
+import { hint_or_not } from "./reducer/hint_or_not.rdc";
 
-const reducer = combineReducers({ typing_data, history_data, notyet_popup });
+const reducer = combineReducers({
+  typing_data,
+  history_data,
+  notyet_popup,
+  hint_or_not,
+});
 
 const persistConfig = {
   key: "root",
-   storage: storage('myDB'),
+  storage: storage("myDB"),
   whitelist: ["history_data"],
 };
 

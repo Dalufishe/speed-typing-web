@@ -1,9 +1,15 @@
 import TypingSystem from "../../core/TypingSystem";
+import { article_generator } from "../../pages/Practice/utils/article_generator";
+
+const article = article_generator(1000);
 
 const typing_data = (
   state = {
     _id: Math.random(),
-    data: new TypingSystem({}) /* template, not the real data */,
+    data: new TypingSystem({
+      article,
+      spanning: 30,
+    }) 
   },
   action
 ) => {
