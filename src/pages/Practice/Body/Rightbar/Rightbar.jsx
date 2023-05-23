@@ -1,4 +1,4 @@
-import { cx } from "@emotion/css";
+import { cx, css } from "@emotion/css";
 import React from "react";
 
 import { AiTwotoneTool } from "react-icons/ai";
@@ -17,16 +17,20 @@ export default function Rightbar() {
         "flex flex-col justify-between"
       )}
     >
-      <div className={cx("h-full", "flex flex-col")}>
+      <div className={cx("h-full", "overflow-hidden", "flex flex-col")}>
         {/* Configbox */}
-        <Configbox />
+        <div className="h-[356px]">
+          <Configbox />
+        </div>
         {/* HistoryStatus */}
-        <div className="flex-grow">
+        <div
+          className={css`
+            height: calc(100% - 356px);
+          `}
+        >
           <HistoryStatus />
         </div>
       </div>
-      {/* Tail */}
-      <div className={cx("w-full h-[21px]", "bg-d3", "rounded-sm")}></div>
     </div>
   );
 }
