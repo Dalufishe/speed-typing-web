@@ -43,7 +43,7 @@ export default class TypingSystem {
       return {
         char,
       };
-    }); 
+    });
 
     this.full_words_array = this.full_article
       .map(({ char }) => char)
@@ -162,9 +162,8 @@ export default class TypingSystem {
       }
 
       if (last_head.char === " " && head[head.length - 2]?.char != " ") {
-        this.#tempdel = tail.splice(
-          0,
-          tail.findIndex(({ char }) => char === " ") + 1
+        this.#tempdel.push(
+          tail.splice(0, tail.findIndex(({ char }) => char === " ") + 1)
         );
       } else {
         tail.shift();
@@ -176,7 +175,8 @@ export default class TypingSystem {
       // 若有文字可刪除
       if (last_head) {
         if (last_head.char === " " && head[head.length - 2]?.char != " ") {
-          tail.unshift(...this.#tempdel);
+          tail.unshift(...this.#tempdel[this.#tempdel.length - 1]);
+          this.#tempdel.pop();
           head.pop();
         } else {
           tail.unshift({

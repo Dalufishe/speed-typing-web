@@ -60,7 +60,7 @@ const HistoryStatusItem = ({ left, center, right }) => {
     >
       <div>{left}</div>
       <div className="flex gap-5">
-        <div className="text-blue-400">{center}</div>
+        <div>{center}</div>
         <div className="font-bold">{right}</div>
       </div>
     </div>
@@ -83,10 +83,7 @@ function HistoryStatus({ history_data }) {
   }) {
     const previous = history_data[index + 1];
     let subtract;
-    if (
-      spanning - time_remaining === spanning &&
-      previous?.spanning - previous?.time_remaining === previous?.spanning
-    ) {
+    if (spanning - time_remaining === spanning) {
       subtract = wpm - previous?.wpm;
       subtract = subtract.toFixed(1);
     } else {
@@ -101,12 +98,27 @@ function HistoryStatus({ history_data }) {
   });
 
   const getBestScore = useCallback(() => {
-    let highest = history_data[0]?.wpm;
+    let highest;
+    if (
+      history_data[0].spanning - history_data[0].time_remaining ===
+      history_data[0].spanning
+    ) {
+      highest = history_data[0]?.wpm;
+    } else {
+      highest = 0;
+    }
     for (let i = 1; i < history_data.length; i++) {
       if (history_data[i]?.wpm > highest) {
-        highest = history_data[i]?.wpm;
+        // not DNF
+        if (
+          history_data[i].spanning - history_data[i].time_remaining ===
+          history_data[i].spanning
+        ) {
+          highest = history_data[i]?.wpm;
+        }
       }
     }
+
     return highest;
   });
   return (
@@ -146,7 +158,17 @@ function HistoryStatus({ history_data }) {
               return handleLeft({ index });
             })()}
             center={(() => {
-              return handleCenter({ wpm, time_remaining, spanning, index });
+              const result = handleCenter({
+                wpm,
+                time_remaining,
+                spanning,
+                index,
+              });
+              return result >= 0 ? (
+                <span className="text-blue-400">{result}</span>
+              ) : (
+                <span className="text-red-400">{result}</span>
+              );
             })()}
             right={(() => {
               return handleRight({ wpm, time_remaining, spanning });
@@ -157,7 +179,7 @@ function HistoryStatus({ history_data }) {
       {/* Bottom */}
       <div className={cx("absolute bottom-0", "w-full")}>
         {/* Best */}
-        <BestScoreItem className="bg-m2 border-t-2 border-b-0">
+        <BestScoreItem className="bg-m2 border-t-2">
           <div className="flex items-center gap-2">
             <img src={turtleIcon} className="w-20" />
             <div className="translate-y-0.5">

@@ -63,10 +63,27 @@ function Editor({
       // 渲染更新
       set_typing_data(t.current);
       // start_race
-      t.current.start_race((t) => {
-        // 渲染更新
-        set_typing_data(t);
-      });
+      t.current.start_race(
+        (t) => {
+          // 渲染更新
+          set_typing_data(t);
+        },
+        // 結束回傳
+        () => {
+          setTypingState("end");
+          clearTimeout(_typing_state_typing_timeout.current);
+          // 判斷重新開始
+          let spaceCount = 0;
+          document.addEventListener("keydown", (evt) => {
+            if (evt.key === " ") {
+              spaceCount++;
+            }
+            if (spaceCount > 5) {
+              window.location.reload();
+            }
+          });
+        }
+      );
     }),
     []
   );
