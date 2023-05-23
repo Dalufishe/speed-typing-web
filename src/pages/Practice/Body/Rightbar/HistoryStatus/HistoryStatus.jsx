@@ -100,8 +100,8 @@ function HistoryStatus({ history_data }) {
   const getBestScore = useCallback(() => {
     let highest;
     if (
-      history_data[0].spanning - history_data[0].time_remaining ===
-      history_data[0].spanning
+      history_data[0]?.spanning - history_data[0]?.time_remaining ===
+      history_data[0]?.spanning
     ) {
       highest = history_data[0]?.wpm;
     } else {
