@@ -83,9 +83,17 @@ function HistoryStatus({ history_data }) {
   }) {
     const previous = history_data[index + 1];
     let subtract;
-    if (spanning - time_remaining === spanning) {
+    if (
+      spanning - time_remaining === spanning &&
+      previous?.spanning - previous?.time_remaining === previous?.spanning
+    ) {
       subtract = wpm - previous?.wpm;
       subtract = subtract.toFixed(1);
+    } else if (
+      previous?.spanning - previous?.time_remaining !=
+      previous?.spanning
+    ) {
+      subtract = wpm;
     } else {
       subtract = "DNF";
     }
