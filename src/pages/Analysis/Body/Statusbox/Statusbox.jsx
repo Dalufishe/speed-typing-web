@@ -59,9 +59,9 @@ function Statusbox({ history_data }) {
         sum += (history_data[i]?.wpm - average) ** 2;
         count++;
       }
-
-      return isNaN(Math.sqrt(sum / count)) ? 0 : Math.sqrt(sum / count);
     }
+
+    return isNaN(Math.sqrt(sum / count)) ? 0 : Math.sqrt(sum / count);
   });
   return (
     <div className={cx("w-full h-[250px] ", "mt-3", "bg-m1", "flex", "p-3")}>
