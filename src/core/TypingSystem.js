@@ -125,6 +125,7 @@ export default class TypingSystem {
         this.current_input = key;
         this.control_article_head_tail(0);
         this.set_words_array();
+        handleKeyDownWithLegalKey(this);
       }
 
       if (this.legal_key.includes(key)) {
@@ -200,7 +201,26 @@ export default class TypingSystem {
     const second_last_head = this.head_article[this.head_article.length - 2];
 
     if (this.current_input === first_tail.char) {
-      if (second_last_head?.char == " " && last_head?.char == " ") {
+      if (
+        // 連續空格
+        second_last_head?.char == " " &&
+        last_head?.char == " "
+      ) {
+        return false;
+      }
+      if (
+        // 可以沒打完，但不能跳過
+        this.head_article
+          .map(({ char }) => char)
+          .join("")
+          .split(/ /gu)
+          .filter((char) => char == "").length >
+        this.head_article
+          .map(({ correct_char }) => correct_char)
+          .join("")
+          .split(/ /gu)
+          .filter((char) => char == "").length
+      ) {
         return false;
       }
       return true;
@@ -232,7 +252,7 @@ export default class TypingSystem {
     this.head_words_array = head
       .map(({ char }) => char)
       .join("")
-      .split(/ +/gu)
+      .split(/ /gu)
       .filter((char) => char != "");
 
     this.tail_words_array = tail

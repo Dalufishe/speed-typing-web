@@ -39,8 +39,7 @@ function OptionList({ set_notyet_popup }) {
             py={8}
             className={"mb-4"}
             onClick={() => {
-              set_notyet_popup(true);
-              // history.push(ROUTE.status);
+              history.push(ROUTE.analysis);
             }}
           >
             <MdLeaderboard />

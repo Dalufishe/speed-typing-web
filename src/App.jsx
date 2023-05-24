@@ -6,6 +6,7 @@ import { HashRouter as Router } from "react-router-dom";
 import NotYet from "./components/NotYet/NotYet";
 import { set_notyet_popup } from "./redux/action/set_notyet_popup.act";
 import { connect } from "react-redux";
+import Header from "./layout/Header/Header";
 
 function App({ notyet_popup, set_notyet_popup }) {
   useEffect(() => {
@@ -28,6 +29,9 @@ function App({ notyet_popup, set_notyet_popup }) {
         </div>
         {/* Main */}
         <div className={cx("flex-grow h-full")}>
+          <div className="h-[66px]">
+            <Header />
+          </div>
           <Main />
         </div>
       </div>

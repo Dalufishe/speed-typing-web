@@ -5,12 +5,15 @@ import { Switch, Redirect, Route } from "react-router-dom";
 import Practice from "../../pages/Practice/Practice";
 import { ROUTE } from "../../constant/route.const";
 import CONFIG from "../../config/web.config.json";
+import Analysis from "../../pages/Analysis/Analysis";
 
 export default function Main() {
   return (
     <div className={cx("w-full h-full", "p-5", "bg-d1")}>
       <Switch>
         <Route path={ROUTE.practice} component={Practice} />
+        <Route path={ROUTE.analysis} component={Analysis} />
+        <Route path={ROUTE.plugin} component={Practice} />
         <Route path={ROUTE.theme} component={Practice} />
         <Route path={ROUTE.achievement} component={Practice} />
         <Route path={ROUTE.leaderboard} component={Practice} />

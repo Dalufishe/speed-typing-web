@@ -149,7 +149,7 @@ function HistoryStatus({ history_data }) {
         count++;
       }
     }
-    return sum / count;
+    return isNaN(sum / count) ? 0 : sum / count;
   });
   const handleSwitchStatus = useCallback(() => {
     if (status === "BEST") setStatus("AVERAGE");

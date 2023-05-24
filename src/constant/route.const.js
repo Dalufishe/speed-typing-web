@@ -1,7 +1,7 @@
 const ROUTE = {
   practice: "/p",
   plugin: "/plugin",
-  status: "/status",
+  analysis: "/analysis",
   theme: "/t",
   achievement: "/a",
   leaderboard: "/b",

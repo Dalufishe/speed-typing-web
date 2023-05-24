@@ -2,13 +2,10 @@ import React from "react";
 
 export default function Header() {
   return (
-    <>
+    <div className="w-full h-full bg-d1">
       <style>
         {`
 .support-ukraine, .support-ukraine:visited {
-	margin-left: -20px;
-  margin-right: -20px;
-  transform: translate(0, -20px);
   background: rgb(0,0,0);
 	display: flex;
 	justify-content: center;
@@ -64,6 +61,6 @@ export default function Header() {
           Donate to support Ukraine's independence.
         </div>
       </a>
-    </>
+    </div>
   );
 }

@@ -4,12 +4,12 @@ const useStartTyping = (cb = () => {}, condition = []) => {
   const handleSpace = useCallback((evt) => {
     if (evt.key === " ") {
       cb();
-      document.removeEventListener("keydown", handleSpace);
+      document.removeEventListener("keyup", handleSpace);
     }
   });
 
   useEffect(() => {
-    document.addEventListener("keydown", handleSpace);
+    document.addEventListener("keyup", handleSpace);
   }, [...condition]);
 };
 

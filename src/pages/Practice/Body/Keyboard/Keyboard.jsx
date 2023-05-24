@@ -1,5 +1,5 @@
 import { cx } from "@emotion/css";
-import { Col } from "antd";
+
 import React from "react";
 
 const Row = ({ children }) => {
