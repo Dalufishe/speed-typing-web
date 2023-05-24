@@ -227,7 +227,8 @@ function HistoryStatus({ history_data }) {
                   if (bestscore < 20) return "烏龜";
                   if (bestscore < 30) return "兔子";
                   if (bestscore < 30) return "貓";
-                  if (bestscore < 50) return "獵豹";
+                  if (bestscore < 40) return "獵豹";
+                  if (bestscore < 50) return "獅子";
                   if (bestscore < 60) return "鯊魚";
                 })()}
               </div>
