@@ -28,6 +28,7 @@ function OptionList({ set_notyet_popup }) {
             className={"mb-4"}
             onClick={() => {
               history.push(ROUTE.practice);
+              history.go(0);
             }}
           >
             <AiFillFire />
@@ -40,6 +41,7 @@ function OptionList({ set_notyet_popup }) {
             className={"mb-4"}
             onClick={() => {
               history.push(ROUTE.analysis);
+              history.go(0);
             }}
           >
             <MdLeaderboard />
@@ -53,6 +55,7 @@ function OptionList({ set_notyet_popup }) {
             onClick={() => {
               set_notyet_popup(true);
               // history.push(ROUTE.plugin);
+              //  history.go(0);
             }}
           >
             <FaPlug />
@@ -78,7 +81,7 @@ function OptionList({ set_notyet_popup }) {
             className={"mb-4"}
             onClick={() => {
               set_notyet_popup(true);
-              // history.push(ROUTE.theme);
+              // history.push(ROUTE.theme); history.go(0)
             }}
           >
             <IoIosColorPalette />
@@ -91,7 +94,7 @@ function OptionList({ set_notyet_popup }) {
             className={"mb-4"}
             onClick={() => {
               set_notyet_popup(true);
-              // history.push(ROUTE.achievement);
+              // history.push(ROUTE.achievement); history.go(0)
             }}
           >
             <GiAchievement />
@@ -104,7 +107,7 @@ function OptionList({ set_notyet_popup }) {
             className={"mb-4"}
             onClick={() => {
               set_notyet_popup(true);
-              // history.push(ROUTE.leaderboard);
+              // history.push(ROUTE.leaderboard); history.go(0)
             }}
           >
             <AiFillTrophy />

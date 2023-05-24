@@ -1,5 +1,6 @@
 import { cx } from "@emotion/css";
 import React from "react";
+import Statusbox from "./Statusbox/Statusbox";
 
 export default function Body() {
   return (
@@ -12,8 +13,11 @@ export default function Body() {
         </p>
         {/* details */}
         <p className={cx("text-m3")}>
-          <span>用戶:訪客</span> / <span>{new Date().toISOString()}</span> / <span>{Math.random()}</span>
+          <span>用戶:訪客</span> / <span>{new Date().toISOString()}</span> /{" "}
+          <span>{Math.random()}</span>
         </p>
+        {/* status box */}
+        <Statusbox />
       </div>
     </div>
   );

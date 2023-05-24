@@ -112,16 +112,8 @@ function HistoryStatus({ history_data }) {
     return spanning - time_remaining === spanning ? wpm.toFixed(1) : "DNF";
   });
   const getBestScore = useCallback(() => {
-    let highest;
-    if (
-      history_data[0]?.spanning - history_data[0]?.time_remaining ===
-      history_data[0]?.spanning
-    ) {
-      highest = history_data[0]?.wpm;
-    } else {
-      highest = 0;
-    }
-    for (let i = 1; i < history_data.length; i++) {
+    let highest = 0;
+    for (let i = 0; i < history_data.length; i++) {
       if (history_data[i]?.wpm > highest) {
         // not DNF
         if (

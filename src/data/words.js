@@ -692,7 +692,6 @@ green
 remain
 honorable
 blushing
-ad hoc
 near
 undesirable
 fortunate
@@ -1048,7 +1047,6 @@ scare
 listen
 shave
 questionable
-mess up
 haunt
 worthless
 ill-informed
@@ -1298,7 +1296,6 @@ watery
 decorous
 panoramic
 rotten
-payment
-`.split("\n");
+payment`.split("\n");
 
 export {words}
