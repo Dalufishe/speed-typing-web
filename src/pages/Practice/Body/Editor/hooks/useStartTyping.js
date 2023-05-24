@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
-const useStartTyping = (cb=()=>{}, condition = []) => {
+const useStartTyping = (cb = () => {}, condition = []) => {
+  const handleSpace = useCallback((evt) => {
+    if (evt.key === " ") {
+      cb();
+      document.removeEventListener("keydown", handleSpace);
+    }
+  });
+
   useEffect(() => {
-    document.addEventListener(
-      "keydown",
-      () => {
-        cb();
-      },
-      { once: true }
-    );
+    document.addEventListener("keydown", handleSpace);
   }, [...condition]);
 };
 

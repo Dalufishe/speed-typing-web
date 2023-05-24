@@ -84,7 +84,6 @@ function Status({ typing_data, set_typing_data, set_history_data }) {
         css`
           overflow-x: overlay;
         `,
-        "mt-5",
         "p-3",
         "h-[88px]",
         "bg-d3",

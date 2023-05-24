@@ -175,7 +175,7 @@ function Editor({
                     return (
                       <>
                         <img src={rollingGif} className="w-4" />
-                        輸入任意鍵開始...
+                        點擊 Space 開始...
                       </>
                     );
                   case "just-start":
