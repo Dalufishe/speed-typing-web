@@ -1,7 +1,8 @@
 import { css, cx } from "@emotion/css";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { tailwindcssConfig } from "../../../../../config/tailwind-js.config";
 import { connect } from "react-redux";
+import Button from "../../../../../components/Button/Button";
 
 import turtleIcon from "./assets/turtle.png";
 
@@ -68,6 +69,8 @@ const HistoryStatusItem = ({ left, center, right }) => {
 };
 
 function HistoryStatus({ history_data }) {
+  // states
+  const [status, setStatus] = useState("BEST");
   // fns
   const handleLeft = useCallback(function ({ index }) {
     let time = new Date().toISOString();
@@ -108,7 +111,6 @@ function HistoryStatus({ history_data }) {
   const handleRight = useCallback(function ({ spanning, wpm, time_remaining }) {
     return spanning - time_remaining === spanning ? wpm.toFixed(1) : "DNF";
   });
-
   const getBestScore = useCallback(() => {
     let highest;
     if (
@@ -133,6 +135,27 @@ function HistoryStatus({ history_data }) {
 
     return highest;
   });
+  const getAverageScore = useCallback(() => {
+    let sum = 0;
+    let count = 0;
+
+    for (let i = 0; i < history_data.length; i++) {
+      if (
+        // 並非 DNF
+        history_data[i]?.spanning - history_data[i]?.time_remaining ===
+        history_data[i]?.spanning
+      ) {
+        sum += history_data[i]?.wpm;
+        count++;
+      }
+    }
+    return sum / count;
+  });
+  const handleSwitchStatus = useCallback(() => {
+    if (status === "BEST") setStatus("AVERAGE");
+    if (status === "AVERAGE") setStatus("BEST");
+  });
+
   return (
     <div className={cx("h-full", "relative", "text-[16px]", "font-mono")}>
       {/* Top */}
@@ -193,9 +216,11 @@ function HistoryStatus({ history_data }) {
         {/* Best */}
         <BestScoreItem className="bg-m2 border-t-2">
           <div className="flex items-center gap-2">
+            {/* icon */}
             <img src={turtleIcon} className="w-20" />
             <div className="translate-y-0.5">
-              <div className="text-[16px] translate-y-1">
+              {/* status */}
+              <div className="text-[16px] translate-y-1.5">
                 {(function () {
                   const bestscore = getBestScore();
                   if (bestscore < 10) return "蝸牛";
@@ -206,9 +231,28 @@ function HistoryStatus({ history_data }) {
                   if (bestscore < 60) return "鯊魚";
                 })()}
               </div>
+              {/* best score / average score */}
               <div className="text-[32px] font-bold text-blue-300 flex gap-2 items-center">
-                {getBestScore()}.0
-                <span className="text-[16px] translate-y-1">w/m</span>
+                {status === "BEST" && (
+                  <>
+                    {getBestScore()}.0
+                    <span className="text-[16px] translate-y-1">w/m</span>
+                  </>
+                )}
+                {status === "AVERAGE" && (
+                  <>
+                    {getAverageScore().toFixed(1)}
+                    <span className="text-[16px] translate-y-1">w/m</span>
+                  </>
+                )}
+                <Button
+                  px={4}
+                  py={1}
+                  className="text-[16px] translate-y-1 translate-x-1"
+                  onClick={handleSwitchStatus}
+                >
+                  {status}
+                </Button>
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@ export default function Title() {
     >
       <div>
         {/* Logo */}
-        <h2 className={cx("text-[20px]", "font-bold")}>SpeedTyping.com</h2>
+        <h2 className={cx("text-[20px]", "font-bold")}>Speed Typing Web</h2>
         {/* Slogan */}
         <p className={cx("text-[12px]", "italic")}>
           Type Faster, Improve Together.

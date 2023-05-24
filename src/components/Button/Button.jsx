@@ -22,6 +22,7 @@ export default function Button({
     <div
       onClick={onClick}
       className={cx(
+        "select-none",
         "flex justify-center items-center gap-1",
         "rounded-md",
         "transition-all",
