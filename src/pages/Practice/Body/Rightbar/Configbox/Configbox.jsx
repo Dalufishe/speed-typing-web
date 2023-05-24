@@ -20,7 +20,7 @@ const ConfigItem = connect((state) => {
     // handle select value
 
     const [value, setValue] = useState(
-      localStorage.getItem(`config-${title}` || options[0])
+      localStorage.getItem(`config-${title}`) || options[0]
     );
 
     useEffect(() => {
