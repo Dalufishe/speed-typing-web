@@ -3,6 +3,10 @@ import { Chart } from "chart.js/auto";
 import { cx } from "@emotion/css";
 import { connect } from "react-redux";
 import { tailwindcssConfig } from "../../../../config/tailwind-js.config";
+import { getAverageScore } from "../../utils/getAverageScore";
+import { getAverageExceptHeadTail } from "../../utils/getAverageExceptHeadTail";
+import { getWorstScore } from "../../utils/getWorstScore";
+import { getBestScore } from "../../utils/getBestScore";
 
 function Trend({ history_data }) {
   // states
@@ -10,54 +14,6 @@ function Trend({ history_data }) {
   // fns
   const handleChangeMode = useCallback((value) => {
     setMode(value);
-  });
-  const getAverageScore = useCallback(() => {
-    let sum = 0;
-    let count = 0;
-
-    for (let i = 0; i < history_data.length; i++) {
-      if (
-        // 並非 DNF
-        history_data[i]?.spanning - history_data[i]?.time_remaining ===
-        history_data[i]?.spanning
-      ) {
-        sum += history_data[i]?.wpm;
-        count++;
-      }
-    }
-    return isNaN(sum / count) ? 0 : sum / count;
-  });
-  const getBestScore = useCallback(() => {
-    let highest = 0;
-    for (let i = 0; i < history_data.length; i++) {
-      if (history_data[i]?.wpm > highest) {
-        // not DNF
-        if (
-          history_data[i].spanning - history_data[i].time_remaining ===
-          history_data[i].spanning
-        ) {
-          highest = history_data[i]?.wpm;
-        }
-      }
-    }
-
-    return highest;
-  });
-  const getWorstScore = useCallback(() => {
-    let lowest = getBestScore();
-    for (let i = 0; i < history_data.length; i++) {
-      if (history_data[i]?.wpm < lowest) {
-        // not DNF
-        if (
-          history_data[i].spanning - history_data[i].time_remaining ===
-          history_data[i].spanning
-        ) {
-          lowest = history_data[i]?.wpm;
-        }
-      }
-    }
-
-    return lowest;
   });
   // generate chart
   useEffect(() => {
@@ -108,7 +64,16 @@ function Trend({ history_data }) {
 
     const average_data = (function () {
       let d = [];
-      let average = getAverageScore();
+      let average = getAverageScore(history_data);
+      for (let i = 0; i < labels_all.length; i++) {
+        d.push(average);
+      }
+      return d;
+    })();
+
+    const average_except_head_tail_data = (function () {
+      let d = [];
+      let average = getAverageExceptHeadTail(history_data);
       for (let i = 0; i < labels_all.length; i++) {
         d.push(average);
       }
@@ -137,6 +102,13 @@ function Trend({ history_data }) {
             pointBorderWidth: 0,
             borderDash: [5],
           },
+          {
+            label: "去頭尾平均 / wpm",
+            data: average_except_head_tail_data,
+            borderColor: tailwindcssConfig.theme.colors.m2,
+            pointBorderWidth: 0,
+            borderDash: [5],
+          },
         ],
       },
       // 配置
@@ -148,11 +120,11 @@ function Trend({ history_data }) {
           y: {
             min:
               mode === "隱藏 DNF"
-                ? getWorstScore() - 5 < 0
+                ? getWorstScore(history_data) - 5 < 0
                   ? 0
-                  : getWorstScore() - 5
+                  : getWorstScore(history_data) - 5
                 : 0,
-            max: getBestScore() + 5,
+            max: getBestScore(history_data) + 5,
             // ticks: {
             //   callback: (value) => value + " w/m",
             // },
