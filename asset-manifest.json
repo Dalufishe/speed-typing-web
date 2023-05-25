@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/speed-typing-web/static/css/main.64f9c437.css",
-    "main.js": "/speed-typing-web/static/js/main.48e8251d.js",
+    "main.css": "/speed-typing-web/static/css/main.db1d6cdc.css",
+    "main.js": "/speed-typing-web/static/js/main.a6e0c2e0.js",
     "static/media/Rolling-1s-200px.gif": "/speed-typing-web/static/media/Rolling-1s-200px.f4771ed485c009dee809.gif",
     "index.html": "/speed-typing-web/index.html",
-    "main.64f9c437.css.map": "/speed-typing-web/static/css/main.64f9c437.css.map",
-    "main.48e8251d.js.map": "/speed-typing-web/static/js/main.48e8251d.js.map"
+    "main.db1d6cdc.css.map": "/speed-typing-web/static/css/main.db1d6cdc.css.map",
+    "main.a6e0c2e0.js.map": "/speed-typing-web/static/js/main.a6e0c2e0.js.map"
   },
   "entrypoints": [
-    "static/css/main.64f9c437.css",
-    "static/js/main.48e8251d.js"
+    "static/css/main.db1d6cdc.css",
+    "static/js/main.a6e0c2e0.js"
   ]
 }
