@@ -1,7 +1,7 @@
 import TypingSystem from "../../core/TypingSystem";
-import { article_generator } from "../../pages/Practice/utils/article_generator";
+import { article_generator } from "../../utils/article_generator";
 
-const article = article_generator(1000);
+const article = article_generator(false);
 
 const typing_data = (
   state = {
@@ -9,7 +9,7 @@ const typing_data = (
     data: new TypingSystem({
       article,
       spanning: 30,
-    }) 
+    }),
   },
   action
 ) => {

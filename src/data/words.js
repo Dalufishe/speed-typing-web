@@ -1296,6 +1296,29 @@ watery
 decorous
 panoramic
 rotten
-payment`.split("\n");
+payment
+learned
+preserve
+declare
+functional
+sculpture
+tribute
+contribute
+defensive
+lean
+stall
+pasta
+specialty
+attraction
+glimpse
+canal
+NATO
+nuclear
+AI
+gem
+tint
+picturesque
+iconic
+stroll`.split("\n");
 
 export {words}

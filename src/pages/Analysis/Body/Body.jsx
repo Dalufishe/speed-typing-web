@@ -1,10 +1,11 @@
 import { cx } from "@emotion/css";
 import React from "react";
 import Statusbox from "./Statusbox/Statusbox";
+import Trend from "./Trend/Trend";
 
 export default function Body() {
   return (
-    <div className={cx("pt-5")}>
+    <div className={cx("pt-5", "overflow-auto")}>
       <div className={cx("p-3", "bg-d3", "font-mono", "rounded-sm")}>
         {/* title */}
         <p className="text-[32px]">
@@ -18,6 +19,8 @@ export default function Body() {
         </p>
         {/* status box */}
         <Statusbox />
+        {/* trend */}
+        <Trend />
       </div>
     </div>
   );

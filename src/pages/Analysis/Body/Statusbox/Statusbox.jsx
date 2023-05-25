@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 
 function Statusbox({ history_data }) {
+  // fns
   const getBestScore = useCallback(() => {
     let score = 0;
     let acc = 0;
@@ -69,7 +70,6 @@ function Statusbox({ history_data }) {
 
     return isNaN(Math.sqrt(sum / count)) ? 0 : Math.sqrt(sum / count);
   });
-
   const getLatestData = useCallback(() => {
     let latest_score = 0;
     for (let i = 0; i < history_data.length; i++) {
@@ -114,7 +114,7 @@ function Statusbox({ history_data }) {
           },
           {
             name: "用戶平均",
-            value: "No enough data",
+            value: "資料不足",
           },
         ]}
       >
@@ -170,7 +170,7 @@ function Statusbox({ history_data }) {
         unit="w/m"
         extend={[
           {
-            name: "最近成績 (!DNF)",
+            name: "最近成績",
             value: getLatestData().toFixed(1),
             unit: "w/m",
           },
