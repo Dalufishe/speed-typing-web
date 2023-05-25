@@ -128,7 +128,7 @@ function Statusbox({ history_data }) {
         unit="w/m"
         extend={[
           {
-            name: "每秒字數",
+            name: "每分字數",
             value: getBestScore()[0].toFixed(1),
             unit: "w/m",
           },
@@ -149,7 +149,7 @@ function Statusbox({ history_data }) {
         unit="w/m"
         extend={[
           {
-            name: "每秒字數",
+            name: "每分字數",
             value: getAverageScore()[0].toFixed(1),
             unit: "w/m",
           },

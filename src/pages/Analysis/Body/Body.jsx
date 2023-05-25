@@ -19,8 +19,10 @@ export default function Body() {
         </p>
         {/* status box */}
         <Statusbox />
-        {/* trend */}
-        <Trend />
+        <div className={cx("w-[900px] mt-4")}>
+          {/* trend */}
+          <Trend />
+        </div>
       </div>
     </div>
   );

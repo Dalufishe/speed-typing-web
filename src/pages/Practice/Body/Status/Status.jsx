@@ -37,7 +37,7 @@ const Statusbox = ({ icon, value, unit, title, className }) => {
           className={cx(
             "flex items-end gap-1",
             css`
-              transition: scale .15s ease-in-out;
+              transition: scale 0.15s ease-in-out;
               scale: 1;
             `,
             isHover &&
@@ -69,7 +69,7 @@ function Status({ typing_data, set_typing_data, set_history_data }) {
         count.current += 1;
       }, 1000);
     }
-    // 將狀態加入歷史紀錄
+    // 結束時，將狀態加入歷史紀錄
     else {
       if (count.current != 0) {
         set_history_data(typing_data);
