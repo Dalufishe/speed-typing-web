@@ -15,13 +15,13 @@ export default function StatusboxItem({
         {/* Top */}
         <div>
           {/* title */}
-          <p className={cx("flex items-center gap-2")}>
+          <div className={cx("flex items-center gap-2")}>
             <div className="flex items-center gap-1">
               <span className="text-blue-400">{icon}</span>
-              <span className="font-bold">{title}</span>
+              <span className="font-bold whitespace-nowrap">{title}</span>
             </div>
             <span className="text-[12px]">{subtitle}</span>
-          </p>
+          </div>
           {/* divider */}
           <div className={cx("w-full h-0.5", "bg-m2")}></div>
         </div>
@@ -38,7 +38,7 @@ export default function StatusboxItem({
         {/* Bottom List */}
         <div>
           {extend.map(({ name, value, unit }) => (
-            <div>
+            <div key={Math.random()}>
               <div className="pt-1 w-full flex items-center justify-between">
                 <span>{name}</span>
                 <span>

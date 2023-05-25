@@ -18,9 +18,9 @@ const Question = (props) => {
 export default function QuestionBtn(props) {
   const [hover, isHover] = useHover();
   const transitions = useTransition(isHover, {
-    from: { opacity: 0, x: 10 },
-    enter: { opacity: 1, x: 0 },
-    leave: { opacity: 0, x: 10 },
+    from: { opacity: 0, x: 14 },
+    enter: { opacity: 1, x: 4 },
+    leave: { opacity: 0, x: 14 },
   });
   return (
     <div ref={hover}>

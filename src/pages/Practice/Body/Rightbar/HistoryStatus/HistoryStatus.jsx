@@ -228,7 +228,7 @@ function HistoryStatus({ history_data }) {
               <div className="text-[32px] font-bold text-blue-300 flex gap-2 items-center">
                 {status === "BEST" && (
                   <>
-                    {getBestScore()}.0
+                    {getBestScore().toFixed(1)}
                     <span className="text-[16px] translate-y-1">w/m</span>
                   </>
                 )}
