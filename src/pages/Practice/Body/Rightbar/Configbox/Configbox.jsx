@@ -113,7 +113,7 @@ function Configbox({ typing_data, set_typing_data, set_hint_or_not }) {
           onChange={handleTimeConfig}
           onMount={handleTimeConfig}
           title="練習時間"
-          options={["30秒", "60秒", "120秒", "300秒", "600秒"]}
+          options={["3秒", "30秒", "60秒", "120秒", "300秒", "600秒"]}
         />
         <ConfigItem
           title="是否提示"

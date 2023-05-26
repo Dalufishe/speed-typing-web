@@ -10,18 +10,20 @@ import { typing_data } from "./reducer/typing_data.rdc";
 import { history_data } from "./reducer/history_data.rdc";
 import { notyet_popup } from "./reducer/notyet_popup.rdc";
 import { hint_or_not } from "./reducer/hint_or_not.rdc";
+import { is_start_PERSIST } from "./reducer/is_start_PERSIST.rdc";
 
 const reducer = combineReducers({
   typing_data,
   history_data,
   notyet_popup,
   hint_or_not,
+  is_start_PERSIST,
 });
 
 const persistConfig = {
   key: "root",
   storage: storage("myDB"),
-  whitelist: ["history_data"],
+  whitelist: ["history_data", "is_start_PERSIST"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

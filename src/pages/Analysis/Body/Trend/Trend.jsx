@@ -17,7 +17,6 @@ function Trend({ history_data }) {
   });
   // generate chart
   useEffect(() => {
-
     // data
 
     const labels = [...history_data]
@@ -142,7 +141,6 @@ function Trend({ history_data }) {
     };
   }, [history_data, mode]);
 
-
   // jsx
 
   return (
@@ -157,21 +155,40 @@ function Trend({ history_data }) {
         <p>
           你的成績趨勢 <span className="text-[16px]"> / Trend</span>
         </p>
-        <select
-          className={cx(
-            "rounded-sm",
-            "bg-d2",
-            "text-b1",
-            "px-1",
-            "text-[16px]"
-          )}
-          onChange={(evt) => {
-            handleChangeMode(evt.target.value);
-          }}
-        >
-          <option>隱藏 DNF</option>
-          <option>顯示全部</option>
-        </select>
+        {/* options */}
+        <div className={cx("flex gap-2")}>
+          {/* DNF ? */}
+          <select
+            className={cx(
+              "rounded-sm",
+              "bg-d2",
+              "text-b1",
+              "px-1",
+              "text-[16px]"
+            )}
+            onChange={(evt) => {
+              handleChangeMode(evt.target.value);
+            }}
+          >
+            <option>隱藏 DNF</option>
+            <option>顯示全部</option>
+          </select>
+          {/* Data Rnage */}
+          <select
+            className={cx(
+              "rounded-sm",
+              "bg-d2",
+              "text-b1",
+              "px-1",
+              "text-[16px]"
+            )}
+            onChange={(evt) => {}}
+          >
+            <option>最新 (Latest) </option>
+            <option>最近十次 ({"<"}10)</option>
+            <option>近五十次 ({"<"}50)</option>
+          </select>
+        </div>
       </div>
       {/* divider */}
 

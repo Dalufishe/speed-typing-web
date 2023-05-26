@@ -10,8 +10,8 @@ export default function StatusboxItem({
   extend = [],
 }) {
   return (
-    <div className={cx("w-[25%] h-full")}>
-      <div className="px-3">
+    <div className={cx("w-[50%] xl:w-[25%] h-full")}>
+      <div className="px-3 pb-6 xl:pb-0">
         {/* Top */}
         <div>
           {/* title */}
@@ -42,8 +42,7 @@ export default function StatusboxItem({
               <div className="pt-1 w-full flex items-center justify-between">
                 <span>{name}</span>
                 <span>
-                  {value}{" "}
-                  {unit}
+                  {value} {unit}
                 </span>
               </div>
               <div className={cx("w-full h-0.5", "bg-m2")}></div>

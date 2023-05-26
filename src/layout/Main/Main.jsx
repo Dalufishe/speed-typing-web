@@ -9,7 +9,7 @@ import Analysis from "../../pages/Analysis/Analysis";
 
 export default function Main() {
   return (
-    <div className={cx("w-full h-full", "p-5", "bg-d1", "overflow-auto")}>
+    <div className={cx("w-full h-full", "p-5", "bg-d1")}>
       <Switch>
         <Route path={ROUTE.practice} component={Practice} />
         <Route path={ROUTE.analysis} component={Analysis} />

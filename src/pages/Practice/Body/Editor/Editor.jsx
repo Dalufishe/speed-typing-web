@@ -6,6 +6,7 @@ import Topbar from "./components/Topbar/Topbar";
 
 import { connect } from "react-redux";
 import { set_typing_data } from "../../../../redux/action/set_typing_data.act";
+import { set_is_start_PERSIST } from "../../../../redux/action/set_is_start_Persist.act";
 
 import Tail from "./components/Tail/Tail";
 
@@ -18,8 +19,8 @@ function Editor({
   typing_data,
   set_typing_data,
   hint,
-  /* render immediatly */
-  id,
+  set_is_start_PERSIST
+  /* render immediatly */,
 }) {
   const { head_article, tail_article } = typing_data;
 
@@ -38,11 +39,13 @@ function Editor({
   // useStartTyping : 當輸入任意建, 即...
   useStartTyping(
     useCallback(() => {
-      // init
+      // typing-hint
       setTypingState("just-start");
       _typing_state_typing_timeout.current = setTimeout(() => {
         setTypingState("typing");
       }, 2000);
+      // set_is_start, control page-reload DNF
+      set_is_start_PERSIST(true);
       // 渲染更新
       set_typing_data(typing_data);
       // start_race
@@ -54,6 +57,8 @@ function Editor({
         // 結束回傳
         () => {
           setTypingState("end");
+          // set_is_start, control page-reload DNF
+          set_is_start_PERSIST(false);
           clearTimeout(_typing_state_typing_timeout.current);
           // 判斷重新開始
           let spaceCount = 0;
@@ -74,6 +79,9 @@ function Editor({
   // useStartTyping: 當輸入 esc , 即...
   useEndTyping(
     useCallback(() => {
+      // set_is_start, control page-reload DNF
+      set_is_start_PERSIST(false);
+
       typing_data.end_race(() => {
         setTypingState("end");
         clearTimeout(_typing_state_typing_timeout.current);
@@ -82,7 +90,7 @@ function Editor({
         document.addEventListener("keydown", (evt) => {
           if (evt.key === " ") {
             spaceCount++;
-          }
+          } 
           if (spaceCount > 5) {
             window.location.reload();
           }
@@ -238,6 +246,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   set_typing_data,
+  set_is_start_PERSIST
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

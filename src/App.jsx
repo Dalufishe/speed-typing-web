@@ -1,4 +1,4 @@
-import { cx } from "@emotion/css";
+import { cx, injectGlobal } from "@emotion/css";
 import React, { useEffect } from "react";
 import Leftbar from "./layout/Leftbar/Leftbar";
 import Main from "./layout/Main/Main";
@@ -7,6 +7,11 @@ import NotYet from "./components/NotYet/NotYet";
 import { set_notyet_popup } from "./redux/action/set_notyet_popup.act";
 import { connect } from "react-redux";
 import Header from "./layout/Header/Header";
+import { tailwindcssConfig } from "./config/tailwind-js.config";
+
+injectGlobal`
+ body{ background-color: ${tailwindcssConfig.theme.colors.d2};}
+`
 
 function App({ notyet_popup, set_notyet_popup }) {
   useEffect(() => {

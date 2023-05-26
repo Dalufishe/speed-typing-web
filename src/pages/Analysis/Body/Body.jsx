@@ -18,9 +18,20 @@ export default function Body() {
             </p>
             {/* details */}
             <p className={cx("text-m3")}>
-              <span>用戶:訪客</span> /{" "}
+              {/* <span>用戶:訪客</span> /{" "}
               <span>{new Date().toLocaleString()}</span> /{" "}
-              <span>{Math.random()}</span>
+              <span>{Math.random()}</span> */}
+              <a href="" className="underline">
+                數據
+              </a>{" "}
+              {">"}{" "}
+              <a href="" className="underline">
+                單人練習
+              </a>{" "}
+              {">"}{" "}
+              <a href="" className="underline">
+                英文單字
+              </a>
             </p>
           </div>
           {/* others */}

@@ -16,20 +16,6 @@ export default function Recent() {
         <p>
           最新成績 <span className="text-[16px]"> / Recent</span>
         </p>
-        <select
-          className={cx(
-            "rounded-sm",
-            "bg-d2",
-            "text-b1",
-            "px-1",
-            "text-[16px]"
-          )}
-          onChange={(evt) => {}}
-        >
-          <option>最新 (Latest) </option>
-          <option>最近十次 ({"<"}10)</option>
-          <option>近五十次 ({"<"}50)</option>
-        </select>
       </div>
       {/* Content */}
       <div className="flex gap-6">
