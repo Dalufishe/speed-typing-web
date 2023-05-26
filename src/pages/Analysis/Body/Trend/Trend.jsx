@@ -153,7 +153,7 @@ function Trend({ history_data }) {
         )}
       >
         <p>
-          你的成績趨勢 <span className="text-[16px]"> / Trend</span>
+          您的成績趨勢 <span className="text-[16px]"> / Trend</span>
         </p>
         {/* options */}
         <div className={cx("flex gap-2")}>

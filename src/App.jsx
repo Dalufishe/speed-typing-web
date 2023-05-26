@@ -1,4 +1,4 @@
-import { cx, injectGlobal } from "@emotion/css";
+import { css, cx, injectGlobal } from "@emotion/css";
 import React, { useEffect } from "react";
 import Leftbar from "./layout/Leftbar/Leftbar";
 import Main from "./layout/Main/Main";
@@ -37,7 +37,9 @@ function App({ notyet_popup, set_notyet_popup }) {
           <div className="h-[66px]">
             <Header />
           </div>
-          <Main />
+          <div className={css`height: calc(100vh - 66px)`}>
+            <Main />
+          </div>
         </div>
       </div>
     </Router>

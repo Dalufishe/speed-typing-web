@@ -262,6 +262,8 @@ export default class TypingSystem {
       .filter((char) => char != "");
   }
 
+
+  // "bug"
   set_correct_word_count() {
     this.correct_word_count = this.head_words_array.filter(
       (word, index) => word === this.full_words_array[index]
