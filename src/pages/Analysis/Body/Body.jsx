@@ -2,6 +2,7 @@ import { cx } from "@emotion/css";
 import React from "react";
 import Statusbox from "./Statusbox/Statusbox";
 import Trend from "./Trend/Trend";
+import Recent from "./Recent/Recent";
 
 export default function Body() {
   return (
@@ -17,7 +18,8 @@ export default function Body() {
             </p>
             {/* details */}
             <p className={cx("text-m3")}>
-              <span>用戶:訪客</span> / <span>{new Date().toISOString()}</span> /{" "}
+              <span>用戶:訪客</span> /{" "}
+              <span>{new Date().toLocaleString()}</span> /{" "}
               <span>{Math.random()}</span>
             </p>
           </div>
@@ -35,9 +37,15 @@ export default function Body() {
         {/* Content */}
         {/* status box */}
         <Statusbox />
-        <div className={cx("w-[900px] mt-4")}>
+        <div className={cx("flex gap-8")}>
           {/* trend */}
-          <Trend />
+          <div className={cx("w-[60%] mt-4")}>
+            <Trend />
+          </div>
+          {/* recent */}
+          <div className={cx("w-[37.5%] mt-4")}>
+            <Recent />
+          </div>
         </div>
       </div>
     </div>

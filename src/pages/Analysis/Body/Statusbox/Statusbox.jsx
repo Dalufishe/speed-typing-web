@@ -41,7 +41,7 @@ function Statusbox({ history_data }) {
           },
           {
             name: "你的平均",
-            value: getAverageScore(history_data),
+            value: getAverageScore(history_data).toFixed(1),
             unit: "w/m",
           },
           {

@@ -17,6 +17,9 @@ function Trend({ history_data }) {
   });
   // generate chart
   useEffect(() => {
+
+    // data
+
     const labels = [...history_data]
       .reverse()
       .map(({ spanning, time_remaining }, index) => {
@@ -80,6 +83,8 @@ function Trend({ history_data }) {
       return d;
     })();
 
+    // chart
+
     let chart = new Chart(document.getElementById("trend-canvas"), {
       // 圖表種類
       type: "line",
@@ -136,6 +141,9 @@ function Trend({ history_data }) {
       chart.destroy();
     };
   }, [history_data, mode]);
+
+
+  // jsx
 
   return (
     <div>

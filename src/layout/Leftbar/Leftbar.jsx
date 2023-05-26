@@ -1,8 +1,6 @@
 import { cx } from "@emotion/css";
 import React from "react";
-import Button from "../../components/Button/Button";
 import Title from "./Title/Title";
-import Powerby from "./Tail/Powerby/Powerby";
 import Tail from "./Tail/Tail";
 import Body from "./Body/Body";
 
