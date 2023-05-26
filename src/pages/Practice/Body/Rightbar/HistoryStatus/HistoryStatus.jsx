@@ -3,6 +3,7 @@ import React, { useCallback, useState } from "react";
 import { tailwindcssConfig } from "../../../../../config/tailwind-js.config";
 import { connect } from "react-redux";
 import Button from "../../../../../components/Button/Button";
+import { Link } from "react-router-dom";
 
 import turtleIcon from "./assets/turtle.png";
 
@@ -73,8 +74,8 @@ function HistoryStatus({ history_data }) {
   const [status, setStatus] = useState("BEST");
   // fns
   const handleLeft = useCallback(function ({ index }) {
-    let time = new Date().toISOString();
-    time = time.slice(0, time.indexOf("T"));
+    let time = new Date(history_data[index].start_time).toLocaleString();
+    time = time.slice(0, time.indexOf(" "));
     let count = history_data.length;
     return time + ` [${count - index}]`;
   });
@@ -163,7 +164,21 @@ function HistoryStatus({ history_data }) {
         )}
       >
         <div className={cx("w-full", "flex justify-between items-center")}>
-          <div>歷史紀錄</div>
+          <div>
+            <Link
+              to="/analysis"
+              onClick={() => {
+                setTimeout(() => {
+                  document
+                    .getElementById("#analysis_history")
+                    .scrollIntoView({ behavior: "smooth" });
+                }, 500);
+              }}
+              className="underline"
+            >
+              歷史紀錄
+            </Link>
+          </div>
           <div className="flex justify-around items-center gap-5 px-2">
             <div className="text-m3">w/m</div>
           </div>

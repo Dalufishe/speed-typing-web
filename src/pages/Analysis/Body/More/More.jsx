@@ -2,22 +2,13 @@ import React from "react";
 import { cx } from "@emotion/css";
 import DnfRate from "./DnfRate/DnfRate";
 import Accuracy from "./Accuracy/Accuracy";
+import Heading2 from "../../components/Heading2";
 
 export default function More() {
   return (
     <div>
       {/* Top */}
-      <div
-        className={cx(
-          "text-[24px]",
-          "mb-2",
-          "flex items-center justify-between"
-        )}
-      >
-        <p>
-          其他統計 <span className="text-[16px]"> / More</span>
-        </p>
-      </div>
+      <Heading2 title={"其他統計"} subtitle={"More"} />
       {/* Content */}
       <div className="flex gap-6">
         <div className={cx("w-[50%]")}>

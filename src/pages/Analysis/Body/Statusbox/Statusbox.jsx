@@ -88,7 +88,7 @@ function Statusbox({ history_data }) {
             unit: "w/m",
           },
           {
-            name: "平均精準度",
+            name: "精準度",
             value: getAverageAcc(history_data).toFixed(1),
             unit: "%",
           },

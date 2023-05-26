@@ -7,6 +7,7 @@ import { getAverageScore } from "../../utils/getAverageScore";
 import { getAverageExceptHeadTail } from "../../utils/getAverageExceptHeadTail";
 import { getWorstScore } from "../../utils/getWorstScore";
 import { getBestScore } from "../../utils/getBestScore";
+import Heading2 from "../../components/Heading2";
 
 function Trend({ history_data }) {
   // states
@@ -145,53 +146,45 @@ function Trend({ history_data }) {
 
   return (
     <div>
-      <div
-        className={cx(
-          "text-[24px]",
-          "mb-2",
-          "flex items-center justify-between"
-        )}
-      >
-        <p>
-          您的成績趨勢 <span className="text-[16px]"> / Trend</span>
-        </p>
-        {/* options */}
-        <div className={cx("flex gap-2")}>
-          {/* DNF ? */}
-          <select
-            className={cx(
-              "rounded-sm",
-              "bg-d2",
-              "text-b1",
-              "px-1",
-              "text-[16px]"
-            )}
-            onChange={(evt) => {
-              handleChangeMode(evt.target.value);
-            }}
-          >
-            <option>隱藏 DNF</option>
-            <option>顯示全部</option>
-          </select>
-          {/* Data Rnage */}
-          <select
-            className={cx(
-              "rounded-sm",
-              "bg-d2",
-              "text-b1",
-              "px-1",
-              "text-[16px]"
-            )}
-            onChange={(evt) => {}}
-          >
-            <option>最新 (Latest) </option>
-            <option>最近十次 ({"<"}10)</option>
-            <option>近五十次 ({"<"}50)</option>
-          </select>
-        </div>
-      </div>
-      {/* divider */}
-
+      <Heading2
+        title={"您的成績趨勢"}
+        subtitle={"Trend"}
+        extend={
+          <div className={cx("flex gap-2")}>
+            {/* DNF ? */}
+            <select
+              className={cx(
+                "rounded-sm",
+                "bg-d2",
+                "text-b1",
+                "px-1",
+                "text-[16px]"
+              )}
+              onChange={(evt) => {
+                handleChangeMode(evt.target.value);
+              }}
+            >
+              <option>隱藏 DNF</option>
+              <option>顯示全部</option>
+            </select>
+            {/* Data Rnage */}
+            <select
+              className={cx(
+                "rounded-sm",
+                "bg-d2",
+                "text-b1",
+                "px-1",
+                "text-[16px]"
+              )}
+              onChange={(evt) => {}}
+            >
+              <option>最新 (Latest) </option>
+              <option>最近十次 ({"<"}10)</option>
+              <option>近五十次 ({"<"}50)</option>
+            </select>
+          </div>
+        }
+      />
       <canvas id="trend-canvas"></canvas>
     </div>
   );

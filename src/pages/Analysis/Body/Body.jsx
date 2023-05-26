@@ -3,6 +3,7 @@ import React from "react";
 import Statusbox from "./Statusbox/Statusbox";
 import Trend from "./Trend/Trend";
 import More from "./More/More";
+import History from "./History/History";
 
 export default function Body() {
   return (
@@ -48,15 +49,20 @@ export default function Body() {
         {/* Content */}
         {/* status box */}
         <Statusbox />
-        <div className={cx("flex gap-8 flex-wrap")}>
+        {/* trend & more */}
+        <div className={cx("flex justify-between gap-8 flex-wrap", "mb-4")}>
           {/* trend */}
           <div className={cx("w-[90%] xl:w-[60%] mt-4")}>
             <Trend />
           </div>
           {/* more */}
-          <div className={cx("w-[50%] xl:w-[36.5%] mt-4")}>
+          <div className={cx("w-[50%] xl:w-[36%] mt-4")}>
             <More />
           </div>
+        </div>
+        {/* history */}
+        <div className="w-[90%] xl:w-[60%]">
+          <History />
         </div>
       </div>
     </div>

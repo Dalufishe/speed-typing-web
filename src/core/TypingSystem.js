@@ -32,6 +32,8 @@ export default class TypingSystem {
 
   is_start = false;
 
+  start_time;
+
   /**@constructor */
 
   constructor({
@@ -62,6 +64,8 @@ export default class TypingSystem {
   //$ 主要方法
   // 開始測驗
   start_race(handleKeyDownWithLegalKey = () => {}, endCallback = () => {}) {
+    // 開始時間
+    this.start_time = Date.now();
     // 狀態為開始
     this.is_start = true;
     // 獲取用戶輸入
@@ -261,7 +265,6 @@ export default class TypingSystem {
       .split(/ +/gu)
       .filter((char) => char != "");
   }
-
 
   // "bug"
   set_correct_word_count() {
