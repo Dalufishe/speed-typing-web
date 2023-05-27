@@ -26,6 +26,13 @@ function Accuracy({ history_data }) {
           },
         ],
       },
+      options: {
+        plugins: {
+          legend: {
+            position: "",
+          },
+        },
+      },
     });
     return () => {
       chart.destroy();
@@ -36,14 +43,14 @@ function Accuracy({ history_data }) {
     <div
       className={cx(
         "w-full h-full",
-        "p-2",
+        "p-4",
         "bg-m1",
         "flex flex-col items-center",
         "rounded-sm shadow-md"
       )}
     >
       <div className={cx("w-[95%] aspect-square")}>
-        <canvas id="accuracy-canvas" className="mb-3"></canvas>
+        <canvas id="accuracy-canvas" className="mb-4"></canvas>
       </div>
       <div className="font-bold">精準度</div>
     </div>

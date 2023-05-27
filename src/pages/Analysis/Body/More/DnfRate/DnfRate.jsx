@@ -15,8 +15,9 @@ function DnfRate({ history_data }) {
           {
             label: "占比",
             data: [
-             100 - getDnfRate(history_data) * 100
-            ,getDnfRate(history_data)*100],
+              100 - getDnfRate(history_data) * 100,
+              getDnfRate(history_data) * 100,
+            ],
             backgroundColor: [
               tailwindcssConfig.theme.colors.blue[400],
               tailwindcssConfig.theme.colors.red[400],
@@ -24,6 +25,13 @@ function DnfRate({ history_data }) {
             hoverOffset: 4,
           },
         ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: "",
+          },
+        },
       },
     });
     return () => {
@@ -35,14 +43,14 @@ function DnfRate({ history_data }) {
     <div
       className={cx(
         "w-full h-full",
-        "p-2",
+        "p-4",
         "bg-m1",
         "flex flex-col items-center",
         "rounded-sm shadow-md"
       )}
     >
       <div className={cx("w-[95%] aspect-square")}>
-        <canvas id="dnf-rate-canvas" className="mb-3"></canvas>
+        <canvas id="dnf-rate-canvas" className="mb-4"></canvas>
       </div>
       <div className="font-bold">DNF 占比率</div>
     </div>

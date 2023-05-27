@@ -103,7 +103,8 @@ function HistoryStatus({ history_data }) {
     ) {
       subtract = wpm;
     } else {
-      subtract = 0;
+      // 當下 DNF
+      subtract = "DNF";
     }
     // 第一次不計
     if (index === history_data.length - 1) subtract = "";
