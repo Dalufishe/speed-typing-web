@@ -70,7 +70,10 @@ function Status({
   useEffect(() => {
     // 當上次沒正常結束
     if (is_start_PERSIST) {
-      set_history_data(new TypingSystem({})); // 加入 DNF
+      let t = new TypingSystem({});
+      // 生成一個假的開始時間
+      t.start_time = Date.now();
+      set_history_data(t); // 加入 DNF
       set_is_start_PERSIST(false);
     }
   }, []);

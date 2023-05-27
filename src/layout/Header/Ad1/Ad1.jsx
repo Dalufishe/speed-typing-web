@@ -13,6 +13,7 @@ export default function Ad1() {
       <div className={cx("font-bold text-[16px]", "flex items-center gap-2")}>
         <a
           href="http://discordapp.com/users/520869862650937364"
+          target="_blank"
           className="underline text-blue-400"
         >
           {">>>"}聯繫{"<<<"}
