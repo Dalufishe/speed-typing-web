@@ -8,10 +8,13 @@ import { set_notyet_popup } from "./redux/action/set_notyet_popup.act";
 import { connect } from "react-redux";
 import Header from "./layout/Header/Header";
 import { tailwindcssConfig } from "./config/tailwind-js.config";
+import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTE } from "./constant/route.const";
+import Login from "./pages/Login/Login";
 
 injectGlobal`
  body{ background-color: ${tailwindcssConfig.theme.colors.d2};}
-`
+`;
 
 function App({ notyet_popup, set_notyet_popup }) {
   useEffect(() => {
@@ -37,7 +40,11 @@ function App({ notyet_popup, set_notyet_popup }) {
           <div className="h-[66px]">
             <Header />
           </div>
-          <div className={css`height: calc(100vh - 66px)`}>
+          <div
+            className={css`
+              height: calc(100vh - 66px);
+            `}
+          >
             <Main />
           </div>
         </div>

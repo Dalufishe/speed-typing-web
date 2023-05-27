@@ -1,24 +1,50 @@
 import { cx } from "@emotion/css";
-import React from "react";
+import React, { useCallback } from "react";
 
 import { Switch, Redirect, Route } from "react-router-dom";
 import Practice from "../../pages/Practice/Practice";
 import { ROUTE } from "../../constant/route.const";
-import CONFIG from "../../config/web.config.json";
 import Analysis from "../../pages/Analysis/Analysis";
+import Login from "../../pages/Login/Login";
+import { connect } from "react-redux";
 
-export default function Main() {
+function Main({ is_local_login }) {
+  const handleRender = useCallback(
+    (component) => {
+      return (props) => {
+        if (!is_local_login) {
+          props.history.push(ROUTE.login);
+        }
+        return is_local_login ? component : <Login />;
+      };
+    },
+    [is_local_login]
+  );
+
   return (
     <div className={cx("w-full h-full", "p-5", "bg-d1")}>
       <Switch>
-        <Route path={ROUTE.practice} component={Practice} />
-        <Route path={ROUTE.analysis} component={Analysis} />
-        <Route path={ROUTE.plugin} component={Practice} />
-        <Route path={ROUTE.theme} component={Practice} />
-        <Route path={ROUTE.achievement} component={Practice} />
-        <Route path={ROUTE.leaderboard} component={Practice} />
-        <Redirect exact from={"/"} to={ROUTE.practice} />
+        <Route path={ROUTE.practice} render={handleRender(<Practice />)} />
+        <Route path={ROUTE.analysis} render={handleRender(<Analysis />)} />
+        <Route path={ROUTE.plugin} render={handleRender(<Analysis />)} />
+        <Route path={ROUTE.theme} render={handleRender(<Analysis />)} />
+        <Route path={ROUTE.achievement} render={handleRender(<Analysis />)} />
+        <Route path={ROUTE.leaderboard} render={handleRender(<Analysis />)} />
+        <Route path={ROUTE.login} component={Login} />
+        {is_local_login ? (
+          <Redirect exact from={"/"} to={ROUTE.practice} />
+        ) : (
+          <Redirect exact from={"/"} to={ROUTE.login} />
+        )}
       </Switch>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    is_local_login: state.is_local_login.is_local_login,
+  };
+};
+
+export default connect(mapStateToProps)(Main);

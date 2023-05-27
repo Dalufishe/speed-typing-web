@@ -6,7 +6,7 @@ export default function Ad1() {
   return (
     <div
       className={cx(
-        "w-full h-[35px] bg-gray-800",
+        "w-full h-[30px] bg-black border border-m3 border-l-0 border-r-0",
         "flex justify-center items-center"
       )}
     >

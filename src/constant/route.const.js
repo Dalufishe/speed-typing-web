@@ -5,6 +5,8 @@ const ROUTE = {
   theme: "/t",
   achievement: "/a",
   leaderboard: "/b",
+  login: "/login",
+  register: "/register",
 };
 
 export { ROUTE };
