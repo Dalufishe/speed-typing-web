@@ -121,7 +121,7 @@ function Configbox({ typing_data, set_typing_data, set_hint_or_not }) {
           onChange={handleHintConfig}
           onMount={handleHintConfig}
         />
-        <ConfigItem title="字體大小" options={["小", "中", "大"]} />
+        <ConfigItem title="開啟特效" options={["開", "關"]} />
       </div>
     </div>
   );

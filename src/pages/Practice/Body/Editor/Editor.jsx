@@ -52,12 +52,16 @@ function Editor({ typing_data, set_typing_data, hint, set_is_start_PERSIST }) {
       clearTimeout(_typing_state_typing_timeout.current);
       // 彈出結算視窗
       setIsResultPopup(true);
+      // 關闢結束視窗
+      document.addEventListener("keyup", (evt) => {
+        if (evt.key === " ") {
+          setIsResultPopup(false);
+        }
+      });
       // 長按 space 重新開始
       let spaceCount = 0;
       document.addEventListener("keydown", (evt) => {
         if (evt.key === " ") {
-          // 關闢結束視窗
-          setIsResultPopup(false);
           spaceCount++;
         }
         if (spaceCount > 5) {
