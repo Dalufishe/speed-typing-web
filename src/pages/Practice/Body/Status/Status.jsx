@@ -64,7 +64,7 @@ function Status({
   is_start_PERSIST,
   set_is_start_PERSIST,
 }) {
-  const { time_remaining, wpm, accurarcy, is_start } = typing_data;
+  const { time_remaining, wpm, accuracy, is_start } = typing_data;
 
   // 控制 page-reload / 中途離開 DNF
   useEffect(() => {
@@ -159,11 +159,11 @@ function Status({
           value={wpm.toFixed(1)}
           unit="w/m"
         />
-        {/* Accurarcy */}
+        {/* accuracy */}
         <Statusbox
           icon={<BsLightningCharge />}
           title={<span className="hidden lg:inline">精確度</span>}
-          value={accurarcy}
+          value={accuracy}
           unit="%"
         />
       </div>

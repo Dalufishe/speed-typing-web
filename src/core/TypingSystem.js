@@ -24,7 +24,7 @@ export default class TypingSystem {
   correct_word_count = 0;
 
   wpm = 0; // w/m
-  accurarcy = 0; // %
+  accuracy = 0; // %
 
   legal_key =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-'\" ";
@@ -78,7 +78,7 @@ export default class TypingSystem {
       // words
       this.set_correct_word_count();
       this.set_word_per_minite();
-      this.set_accurarcy();
+      this.set_accuracy();
     });
     // 結束計時
     setTimeout(() => {
@@ -282,10 +282,10 @@ export default class TypingSystem {
     this.wpm = wpm;
   }
 
-  set_accurarcy() {
-    let accurarcy =
+  set_accuracy() {
+    let accuracy =
       (this.correct_word_count / this.head_words_array.length) * 100;
-    accurarcy = Number(accurarcy.toFixed(1)) || 0;
-    this.accurarcy = accurarcy;
+    accuracy = Number(accuracy.toFixed(1)) || 0;
+    this.accuracy = accuracy;
   }
 }

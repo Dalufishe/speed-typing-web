@@ -8,11 +8,13 @@ function ResultModalCenter({ typing_data }) {
 
   // fns
   const handleWpm = useCallback(function ({ spanning, wpm, time_remaining }) {
-    return spanning - time_remaining === spanning ? wpm.toFixed(1) : "DNF";
+    return spanning - time_remaining === spanning ? wpm?.toFixed(1) : "DNF";
   });
 
   const handleAcc = useCallback(({ spanning, accuracy, time_remaining }) => {
-    return spanning - time_remaining === spanning ? accuracy.toFixed(1) : "DNF";
+    return spanning - time_remaining === spanning
+      ? accuracy?.toFixed(1)
+      : "DNF";
   });
 
   return (
@@ -29,7 +31,12 @@ function ResultModalCenter({ typing_data }) {
         value={handleAcc(typing_data)}
         unit={"%"}
       />
-      <ResultItem title={"階段排名"} subtitle={"accuracy"}value={"50K+"} unit={"#"}/>
+      <ResultItem
+        title={"階段排名"}
+        subtitle={"accuracy"}
+        value={"50K+"}
+        unit={"#"}
+      />
     </div>
   );
 }

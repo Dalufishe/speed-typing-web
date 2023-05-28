@@ -9,7 +9,7 @@ const getAverageAcc = (history_data) => {
       history_data[i]?.spanning - history_data[i]?.time_remaining ===
       history_data[i]?.spanning
     ) {
-      acc_sum += history_data[i]?.accurarcy;
+      acc_sum += history_data[i]?.accuracy;
       count++;
     }
   }

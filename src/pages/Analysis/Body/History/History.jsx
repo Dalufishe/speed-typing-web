@@ -33,7 +33,7 @@ const HistoryItem = ({ index, time, wpm, wpm_subtraction, acc, extend }) => {
 
 function History({ history_data }) {
   const handleIndex = useCallback((index) => {
-    return history_data.length  - index;
+    return history_data.length - index;
   });
 
   const handleTime = useCallback((item) => {
@@ -82,7 +82,7 @@ function History({ history_data }) {
 
   const handleAcc = useCallback((item) => {
     if (item.spanning - item.time_remaining === item.spanning) {
-      return item.accurarcy + "  %";
+      return item.accuracy + "  %";
     } else {
       return "DNF";
     }
