@@ -4,12 +4,14 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { connect } from "react-redux";
 import { ROUTE } from "../../../../constant/route.const";
 import { set_notyet_popup } from "../../../../redux/action/set_notyet_popup.act";
+import platform from "platform";
 
 function LoginAndRegister({ set_notyet_popup, is_local_login }) {
   const history = useHistory();
-
+  console.log(platform);
   const handleLoginButtonName = useCallback(() => {
-    if (is_local_login) return <div className="text-blue-400">本地</div>;
+    if (is_local_login)
+      return <div className="text-blue-400 whitespace-nowrap">本機</div>;
     else return "登入";
   }, [is_local_login]);
 

@@ -33,7 +33,7 @@ const HistoryItem = ({ index, time, wpm, wpm_subtraction, acc, extend }) => {
 
 function History({ history_data }) {
   const handleIndex = useCallback((index) => {
-    return index + 1 < 10 ? "0" + (index + 1) : index + 1;
+    return history_data.length  - index;
   });
 
   const handleTime = useCallback((item) => {

@@ -9,12 +9,14 @@ import Login from "../../pages/Login/Login";
 import { connect } from "react-redux";
 
 function Main({ is_local_login }) {
-  const handleRender = useCallback(
-    (component) => {
+  
+  const handleRender = useCallback((component) => {
       return (props) => {
+        // 並未登入，跳回登入頁
         if (!is_local_login) {
           props.history.push(ROUTE.login);
         }
+        // 登入，載入新頁面
         return is_local_login ? component : <Login />;
       };
     },

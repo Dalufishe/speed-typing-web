@@ -179,6 +179,7 @@ function HistoryStatus({ history_data }) {
             >
               歷史紀錄
             </Link>
+           {" "} (簡)
           </div>
           <div className="flex justify-around items-center gap-5 px-2">
             <div className="text-m3">w/m</div>
@@ -229,16 +230,7 @@ function HistoryStatus({ history_data }) {
             <div className="translate-y-0.5">
               {/* status */}
               <div className="text-[16px] translate-y-1.5">
-                {(function () {
-                  const bestscore = getBestScore();
-                  if (bestscore < 10) return "蝸牛";
-                  if (bestscore < 20) return "烏龜";
-                  if (bestscore < 30) return "兔子";
-                  if (bestscore < 30) return "貓";
-                  if (bestscore < 40) return "獵豹";
-                  if (bestscore < 50) return "獅子";
-                  if (bestscore < 60) return "鯊魚";
-                })()}
+             50000+ #
               </div>
               {/* best score / average score */}
               <div className="text-[32px] font-bold text-blue-300 flex gap-2 items-center">
