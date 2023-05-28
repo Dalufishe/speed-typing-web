@@ -21,7 +21,7 @@ const Statusbox = ({ icon, value, unit, title, className }) => {
         "cursor-default",
         "px-5 py-4",
         "bg-d2",
-        "border-[1.5px] border-m1",
+        "border-t border-l border-m2",
         "rounded-md",
         "shadow-md",
         "text-[20px]",
@@ -109,10 +109,10 @@ function Status({
         "p-3",
         "h-[88px]",
         "bg-d3",
-        "rounded-md",
+        "rounded-sm",
         "shadow-md",
         "flex justify-center items-center gap-3",
-        "border-[1.5px] border-m1"
+        "border-t-2 border-l-2 border-m1"
       )}
     >
       {/* left-box */}
@@ -126,7 +126,11 @@ function Status({
         {/* end */}
         <Button
           bg="m1"
-          className={cx("border border-m3", "rounded-sm", "whitespace-nowrap")}
+          className={cx(
+            "rounded-sm",
+            "whitespace-nowrap",
+            "border-0 border-t border-l border-m3"
+          )}
           px={20}
           py={16}
         >

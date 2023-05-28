@@ -6,6 +6,8 @@ import Button from "../../../../../components/Button/Button";
 import { Link } from "react-router-dom";
 
 import turtleIcon from "./assets/turtle.png";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { ROUTE } from "../../../../../constant/route.const";
 
 const BestScoreItem = ({ children, className }) => {
   return (
@@ -14,34 +16,7 @@ const BestScoreItem = ({ children, className }) => {
         "w-full h-[84px]",
         "border-2 border-d3 border-t-0",
         "flex items-center justify-between px-2",
-        css`
-          background: linear-gradient(
-                135deg,
-                transparent 15px,
-                ${tailwindcssConfig.theme.colors.m2} 0
-              )
-              top left,
-            linear-gradient(
-                -135deg,
-                transparent 0px,
-                ${tailwindcssConfig.theme.colors.m2} 0
-              )
-              top right,
-            linear-gradient(
-                -45deg,
-                transparent 15px,
-                ${tailwindcssConfig.theme.colors.m2} 0
-              )
-              bottom right,
-            linear-gradient(
-                45deg,
-                transparent 0px,
-                ${tailwindcssConfig.theme.colors.m2} 0
-              )
-              bottom left;
-          background-size: 50% 50%;
-          background-repeat: no-repeat;
-        `,
+        css``,
         className
       )}
     >
@@ -50,14 +25,18 @@ const BestScoreItem = ({ children, className }) => {
   );
 };
 
-const HistoryStatusItem = ({ left, center, right }) => {
+const HistoryStatusItem = ({ left, center, right, onClick }) => {
   return (
     <div
+      onClick={onClick}
+      title={`查看更多關於 ${left}`}
       className={cx(
-        " px-2",
+        "px-2",
         "w-full h-[63px]",
         "flex items-center justify-between",
-        "border-2 border-d3 border-t-0"
+        "border-2 border-d3 border-t-0",
+        "bg-m1 hover:bg-m2",
+        "cursor-pointer"
       )}
     >
       <div>{left}</div>
@@ -70,6 +49,8 @@ const HistoryStatusItem = ({ left, center, right }) => {
 };
 
 function HistoryStatus({ history_data }) {
+  // hooks
+  const history = useHistory();
   // states
   const [status, setStatus] = useState("BEST");
   // fns
@@ -149,9 +130,24 @@ function HistoryStatus({ history_data }) {
     if (status === "BEST") setStatus("AVERAGE");
     if (status === "AVERAGE") setStatus("BEST");
   });
-
+  const handleSwitchPage = useCallback(() => {
+    history.push(ROUTE.analysis);
+    setTimeout(() => {
+      document
+        .getElementById("#analysis_history")
+        .scrollIntoView({ behavior: "smooth" });
+    }, 500);
+  });
   return (
-    <div className={cx("h-full", "relative", "text-[16px]", "font-mono")}>
+    <div
+      className={cx(
+        "h-full",
+        "relative",
+        "text-[16px]",
+        "font-mono",
+        "relative"
+      )}
+    >
       {/* Top */}
       <div
         className={cx(
@@ -168,18 +164,12 @@ function HistoryStatus({ history_data }) {
           <div>
             <Link
               to="/analysis"
-              onClick={() => {
-                setTimeout(() => {
-                  document
-                    .getElementById("#analysis_history")
-                    .scrollIntoView({ behavior: "smooth" });
-                }, 500);
-              }}
+              onClick={handleSwitchPage}
               className="underline"
             >
               歷史紀錄
-            </Link>
-           {" "} (簡)
+            </Link>{" "}
+            (簡)
           </div>
           <div className="flex justify-around items-center gap-5 px-2">
             <div className="text-m3">w/m</div>
@@ -189,7 +179,8 @@ function HistoryStatus({ history_data }) {
       {/* Content */}
       <div
         className={cx(
-          "overflow-auto",
+          "overflow-y-auto overflow-x-hidden",
+
           css`
             height: calc(100% - 21px - 90px);
           `
@@ -197,6 +188,7 @@ function HistoryStatus({ history_data }) {
       >
         {history_data.map(({ wpm, time_remaining, spanning }, index) => (
           <HistoryStatusItem
+            onClick={handleSwitchPage}
             key={Math.random()}
             left={(() => {
               return handleLeft({ index });
@@ -229,9 +221,7 @@ function HistoryStatus({ history_data }) {
             <img src={turtleIcon} className="w-20" />
             <div className="translate-y-0.5">
               {/* status */}
-              <div className="text-[16px] translate-y-1.5">
-             50000+ #
-              </div>
+              <div className="text-[16px] translate-y-1.5">50000+ #</div>
               {/* best score / average score */}
               <div className="text-[32px] font-bold text-blue-300 flex gap-2 items-center">
                 {status === "BEST" && (

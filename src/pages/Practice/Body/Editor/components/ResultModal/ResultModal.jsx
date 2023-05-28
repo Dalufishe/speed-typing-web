@@ -28,7 +28,7 @@ export default function ResultModal({ open, setOpen }) {
       <animated.div
         style={springs}
         className={cx(
-          "w-[1000px] aspect-video",
+          "w-[900px] aspect-video",
           "bg-d3",
           "border-t-2 border-l-2 border-m2",
           "outline-none",

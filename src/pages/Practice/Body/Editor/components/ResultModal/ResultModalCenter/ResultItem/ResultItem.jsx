@@ -1,5 +1,6 @@
 import { cx } from "@emotion/css";
 import React from "react";
+import Button from "../../../../../../../../components/Button/Button";
 
 export default function ResultItem({ title, subtitle, value, unit }) {
   return (
@@ -7,6 +8,7 @@ export default function ResultItem({ title, subtitle, value, unit }) {
       className={cx(
         "w-full aspect-square",
         "bg-m1",
+        "border-t border-l border-m3",
         "p-2",
         "rounded-sm shadow-md"
       )}
@@ -26,7 +28,7 @@ export default function ResultItem({ title, subtitle, value, unit }) {
       {/* divider */}
       <div className={cx("w-full h-0.5", "bg-m2")}></div>
       {/* value */}
-      <div className="flex justify-center py-14">
+      <div className="flex justify-center py-11">
         <div>
           <span className={cx("text-[72px]")}>{value}</span>{" "}
           <span className={cx("text-[24px]")}>{unit}</span>
