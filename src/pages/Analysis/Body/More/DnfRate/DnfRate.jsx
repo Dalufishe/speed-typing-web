@@ -45,6 +45,7 @@ function DnfRate({ history_data }) {
         "w-full h-full",
         "p-4",
         "bg-m1",
+        "border-t-2 border-m3",
         "flex flex-col items-center",
         "rounded-sm shadow-md"
       )}

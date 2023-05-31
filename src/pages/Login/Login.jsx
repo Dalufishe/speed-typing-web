@@ -6,6 +6,7 @@ import { ROUTE } from "../../constant/route.const";
 import { connect } from "react-redux";
 import { set_is_local_login } from "../../redux/action/set_is_local_login";
 import PopupHint from "../../components/PopupHint/PopupHint";
+import { zh_TW } from "../../locale/zh_TW";
 
 function Login({ set_is_local_login }) {
   const history = useHistory();
@@ -60,15 +61,11 @@ function Login({ set_is_local_login }) {
             </div>
             {/* Content */}
             <div>
-              <p className={cx("text-[16px]")}>
-                Speed Typing Web
-                是一款免費的線上打字測驗平台，你可以在這裡獲得最純粹的打字體驗，及大量豐富的特色功能。
-              </p>
+              <p className={cx("text-[16px]")}>{zh_TW.website.description}</p>
               <ul className="list-disc ml-8 mt-4 flex flex-col gap-1">
-                <li>練習 - 測驗您的英文打字能力.</li>
-                <li>連線 - 和其他使用者一對一競賽.</li>
-                <li>分析 - 紀錄您的打字成績並分析.</li>
-                <li>社群 - 官方 DC 頻道，和其他用戶交流.</li>
+                {zh_TW.website.features.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </ul>
             </div>
             {/* Content2 */}

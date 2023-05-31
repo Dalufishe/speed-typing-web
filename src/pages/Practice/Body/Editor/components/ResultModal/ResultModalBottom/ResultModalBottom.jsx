@@ -1,7 +1,7 @@
 import { cx } from "@emotion/css";
 import React from "react";
 import Button from "../../../../../../../components/Button/Button";
-import { GoLinkExternal } from "react-icons/go";
+import { GoLinkExternal, GoDesktopDownload } from "react-icons/go";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { ROUTE } from "../../../../../../../constant/route.const";
 
@@ -35,11 +35,26 @@ export default function ResultModalBottom({ setOpen }) {
           "rounded-md shadow-md",
           "h-[48px]",
           "flex justify-center items-center",
-          "text-[16px]"
+          "text-[16px]",
+          "font-bold"
         )}
       >
         <GoLinkExternal />
         更多
+      </Button>
+      <Button
+        bg="m1"
+        className={cx(
+          "border-t border-l border-m3",
+          "rounded-md shadow-md",
+          "h-[48px]",
+          "flex justify-center items-center",
+          "text-[16px]",
+          "font-bold"
+        )}
+      >
+        <GoDesktopDownload />
+        下載
       </Button>
     </div>
   );

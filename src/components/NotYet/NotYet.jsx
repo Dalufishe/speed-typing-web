@@ -19,11 +19,12 @@ export default function NotYet() {
     <animated.div
       style={springs}
       className={cx(
+        "z-50",
         "fixed bottom-6 left-[50%] translate-x-[-50%]",
-        "text-b1 font-mono"
+        "text-b1 text-[20px] font-mono"
       )}
     >
-      <Button bg="d3" px={24} className={cx("rounded-xl", "border border-m2")}>
+      <Button bg="d3" px={24} py={12} className={cx("rounded-md", "border-t border-l border-m3")}>
         此功能仍在開發中...
       </Button>
     </animated.div>

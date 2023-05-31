@@ -2,26 +2,28 @@ import { css, cx } from "@emotion/css";
 import React from "react";
 import Editor from "./Editor/Editor";
 import Status from "./Status/Status";
-
 import Rightbar from "./Rightbar/Rightbar";
-import Keyboard from "./Keyboard/Keyboard";
+import Contentbox from "./Contentbox/Contentbox";
 
 export default function Body() {
   return (
-    <div className={cx("pt-5", "flex gap-5")}>
+    <div className={cx("h-full", "pt-5", "flex gap-5")}>
       <div
         className={cx(
-          "h-[800px]",
+          "h-full",
           "flex-grow",
           "flex flex-col gap-5",
+          "relative",
           css`
             width: calc(100vw - 600px - 60px);
           `
-        )}             
+        )}
       >
         <Editor />
-        {/* <Keyboard /> */}
         <Status />
+        <div className={cx("absolute bottom-0")}>
+          <Contentbox />
+        </div>
       </div>
       <div
         className={cx(

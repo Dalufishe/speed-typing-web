@@ -113,7 +113,7 @@ function Editor({ typing_data, set_typing_data, hint, set_is_start_PERSIST }) {
         {/* editor-topbar */}
         <div className={cx("h-[28px]")}>
           <Topbar />
-        </div>
+        </div>                    
         {/* Typing Area */}
         <div
           className={cx(

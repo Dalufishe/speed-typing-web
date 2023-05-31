@@ -23,6 +23,7 @@ function Statusbox({ history_data }) {
         "w-full",
         "mt-3",
         "bg-m1",
+        "border-t-2  border-m3",
         "flex flex-wrap",
         "p-3 pb-4",
         "rounded-sm"

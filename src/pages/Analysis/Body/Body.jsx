@@ -8,7 +8,15 @@ import History from "./History/History";
 export default function Body() {
   return (
     <div className={cx("pt-5")}>
-      <div className={cx("p-3", "bg-d3", "font-mono", "rounded-sm")}>
+      <div
+        className={cx(
+          "p-3",
+          "bg-d3",
+          "border-t-2 border-l-2 border-m1",
+          "font-mono",
+          "rounded-sm"
+        )}
+      >
         {/* Top */}
         <div className="flex items-center justify-between">
           <div>

@@ -24,6 +24,7 @@ function LoginAndRegister({ set_notyet_popup, is_local_login }) {
           py={6}
           onClick={() => {
             history.push(ROUTE.login);
+            history.go(0);
           }}
         >
           {handleLoginButtonName()}

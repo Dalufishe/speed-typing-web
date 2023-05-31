@@ -22,7 +22,7 @@ const Statusbox = ({ icon, value, unit, title, className }) => {
         "px-5 py-4",
         "bg-d2",
         "border-t border-l border-m2",
-        "rounded-md",
+        "rounded-sm",
         "shadow-md",
         "text-[20px]",
         "whitespace-nowrap",
