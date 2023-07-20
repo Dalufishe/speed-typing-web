@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <div className="w-full h-full bg-d1">
       <Ukraine />
-      <Ad1 />
+      {/* <Ad1 /> */}
     </div>
   );
 }

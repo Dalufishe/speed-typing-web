@@ -42,17 +42,17 @@ function Login({ set_is_local_login }) {
     >
       {isLocalLoinConfirmPopup && <PopupHint>請先勾選本地登入同意項</PopupHint>}
       <div
-        className={cx("w-[1200px] aspect-video", "bg-d3", "rounded-lg", "flex")}
+        className={cx("w-[90%]", "bg-d3", "rounded-lg", "flex items-stretch")}
       >
         {/* Left */}
-        <div className={cx("w-[66.6%] h-full", "pt-12 p-8")}>
+        <div className={cx("flex-grow", "pt-12 p-8")}>
           {/* Heading */}
           <p className={cx("text-[32px] font-bold")}>
             登入 <span className={cx("text-[20px] font-bold")}>/ Login</span>
           </p>
         </div>
         {/* Right */}
-        <div className={cx("w-[33.3%] h-full", "bg-m1", "pt-12 p-8")}>
+        <div className={cx("w-[400px] h-full", "bg-m1", "pt-12 p-8")}>
           <div className={cx("flex flex-col gap-10")}>
             {/* Heading */}
             <div>

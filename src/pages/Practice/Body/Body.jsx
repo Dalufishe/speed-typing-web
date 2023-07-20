@@ -21,9 +21,6 @@ export default function Body() {
       >
         <Editor />
         <Status />
-        <div className={cx("absolute bottom-0")}>
-          <Contentbox />
-        </div>
       </div>
       <div
         className={cx(
